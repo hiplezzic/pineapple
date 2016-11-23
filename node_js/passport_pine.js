@@ -7,7 +7,6 @@ function Passport_pine (passport, googleAuthObj) {
 	var passport = passport;
 
 	this.serializeUser = function (mysqlConnection) {
-
 		passport.serializeUser(function(nickname, done) {
 			done(null, nickname);
 		});
@@ -19,7 +18,6 @@ function Passport_pine (passport, googleAuthObj) {
 					throw err;
 				} else {
 					if (!rows.length) {
-						//res.render('./layout', {address: includeAddress['/error']['unauth'], errStr: 'Wrong user'});
 						done('no setup id yet', false);
 					} else {
 						return done(null, nickname);
@@ -30,7 +28,6 @@ function Passport_pine (passport, googleAuthObj) {
 	}
 
 	this.submitLocal = function (mysqlConnection, hasher, LocalStrategy) {
-
 		passport.use(new LocalStrategy(
 			function(username, password, done) {
 				var query = 'SELECT * FROM accounts WHERE username=?';
@@ -38,22 +35,18 @@ function Passport_pine (passport, googleAuthObj) {
 					if (err) {
 						throw err;
 						done(null, false);
-						//res.render('./layout', {address: includeAddress['/error']['unauth'], errStr: err});
 					} else {
 						if (!rows.length) {
 							done(null, false);
-							//res.render('./layout', {address: includeAddress['/error']['unauth'], errStr: 'Wrong user'});
 						} else {
 							var hasherOpts = {};
 							hasherOpts.password = password;
 							hasherOpts.salt = rows[0].salt;
 							hasher(hasherOpts, function(err, pass, salt, hash) {
 								if (rows[0].password === hash) {
-									//req.session.nickname = rows[0].nickname;
 									done(null, rows[0].nickname);
 								} else {
 									done(null, false);
-									//res.render('./layout', {address: includeAddress['/error']['unauth'], errStr: 'Wrong password'});
 								}
 							});
 						}
@@ -64,7 +57,6 @@ function Passport_pine (passport, googleAuthObj) {
 	}
 
 	this.submitGoogle = function (mysqlConnection, hasher, GoogleStrategy) {
-
 		passport.use(new GoogleStrategy(
 			{
 				clientID: googleAuthObj.client_id,

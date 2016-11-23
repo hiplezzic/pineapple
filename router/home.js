@@ -18,11 +18,6 @@ function Home (ejsPine) {
 			}
 		}
 		ejsPine.findEjsAddress(req, res, 'home', obj);
-		// if (req.session.passport && req.session.passport.hasOwnProperty('user')) {
-		// 	res.render('./layout', {ejsAddress: address['ejs']['/']['auth'], hrefAddress: address['href'], user: req.session.passport.user});
-		// } else {
-		// 	res.render('./layout', {ejsAddress: address['ejs']['/']['unauth'], hrefAddress: address['href']});
-		// }
 	});
 }
 

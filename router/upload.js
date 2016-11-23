@@ -2,11 +2,11 @@
 // /router/upload.js
 //-------------------------------------
 
-function Upload (mysqlConnection, upload, address) {
+function Upload (mysqlConnection, upload, ejsPine) {
 
 	var mysqlConnection = mysqlConnection;
 	var upload = upload;
-	var address = address;
+	var ejsPine = ejsPine;
 
 	var express = require('express');
 	this.router = express.Router();
@@ -14,15 +14,15 @@ function Upload (mysqlConnection, upload, address) {
 	var google = require('googleapis');
 
 	this.router.get('/youtube', function (req, res, next) {
-		res.render('./layout', {ejsAddress: address['ejs']['/upload/youtube']['auth'], hrefAddress: address['href']});
+		ejsPine.findEjsAddress(req, res, 'youtube', obj);
 	});
 	this.router.post('/youtube', upload.single('video'), function (req, res, next) {
 
 		var OAuth2 = google.auth.OAuth2;
 		var oauth2Client = new OAuth2 (
-			'199329358753-87p4jsqqc13b26qbmg5t6jt2ivievaes.apps.googleusercontent.com',
-			'q7crdYt0EG7OXpROZ6zu9h5G',
-			'http://localhost:81/auth/google/callback'
+			'clientid',
+			'clientpassword',
+			'callback'
 		);
 		oauth2Client.setCredentials({
 			access_token: 'token'

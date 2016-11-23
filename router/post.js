@@ -2,10 +2,10 @@
 // /router/index.js
 //-------------------------------------
 
-function Post (mysqlConnection, upload, address) {
+function Post (mysqlConnection, upload, ejsPine) {
 
 	var mysqlConnection = mysqlConnection;
-	var address = address;
+	var ejsPine = ejsPine;
 	var Mysql_pine = require('../node_js/mysql_pine');
 	var mysqlPine = new Mysql_pine(mysqlConnection);
 
@@ -13,11 +13,7 @@ function Post (mysqlConnection, upload, address) {
 	this.router = express.Router();
 
 	this.router.get('/writepost', function (req, res, next) {
-		if (req.session.passport && req.session.passport.hasOwnProperty('user')) {
-			res.render('./layout', {ejsAddress: address['ejs']['/post/writepost']['auth'], hrefAddress: address['href']});
-		} else {
-			res.render('./layout', {ejsAddress: address['ejs']['/post/writepost']['unauth'], hrefAddress: address['href'], errStr: '포스트를 작성하시려면, '});
-		}
+		ejsPine.findEjsAddress(req, res, 'writepost');
 	});
 	this.router.post('/writepost', upload.single('imgfile'), function (req, res, next) {
 		var tempObj = {};
@@ -65,23 +61,23 @@ function Post (mysqlConnection, upload, address) {
 			if (JSON.parse(rows[0]['contents'])['videourl']) {
 				videourl = JSON.parse(rows[0]['contents'])['videourl'].replace('watch?v=', 'embed/');
 			}
-			
-			if (req.session.passport && req.session.passport.hasOwnProperty('user')) {
-				res.render('./layout', {ejsAddress: address['ejs']['/post/no']['auth'], hrefAddress: address['href'], title: rows[0]['title'], img: img, videourl: videourl});
-			} else {
-				res.render('./layout', {ejsAddress: address['ejs']['/post/no']['unauth'], hrefAddress: address['href'], title: rows[0]['title'], img: img, videourl: videourl});
+
+			var obj = {
+				classes: [],
+				contents: {title: rows[0]['title'], img: img, videourl: videourl}
 			}
+			ejsPine.findEjsAddress(req, res, 'postview', obj);
 		});
 	});
 
 	this.router.get('/archive', function (req, res, next) {
 		var query = 'SELECT * FROM board';
 		mysqlConnection.query(query, function (err, rows, fields) {
-			if (req.session.passport && req.session.passport.hasOwnProperty('user')) {
-				res.render('./layout', {ejsAddress: address['ejs']['/post/archive']['auth'], hrefAddress: address['href'], archive: rows});
-			} else {
-				res.render('./layout', {ejsAddress: address['ejs']['/post/archive']['unauth'], hrefAddress: address['href'], archive: rows});
+			var obj = {
+				classes: [],
+				contents: rows
 			}
+			ejsPine.findEjsAddress(req, res, 'archive', obj);
 		});
 	});
 
@@ -89,17 +85,17 @@ function Post (mysqlConnection, upload, address) {
 		var query = 'SELECT * FROM board WHERE title=?';
 		mysqlConnection.query(query, [req.query.q], function (err, rows, fields) {
 			if (rows.length) {
-				if (req.session.passport && req.session.passport.hasOwnProperty('user')) {
-					res.render('./layout', {ejsAddress: address['ejs']['/post/search']['auth'], hrefAddress: address['href'], search: rows});
-				} else {
-					res.render('./layout', {ejsAddress: address['ejs']['/post/search']['unauth'], hrefAddress: address['href'], search: rows});
+				var obj = {
+					classes: [],
+					contents: rows
 				}
+				ejsPine.findEjsAddress(req, res, 'search', obj);
 			} else {
-				if (req.session.passport && req.session.passport.hasOwnProperty('user')) {
-					res.render('./layout', {ejsAddress: address['ejs']['/error']['auth'], hrefAddress: address['href'], errStr: '일치하는 포스트가 없습니다.'});
-				} else {
-					res.render('./layout', {ejsAddress: address['ejs']['/error']['unauth'], hrefAddress: address['href'], errStr: '일치하는 포스트가 없습니다.'});
-				}	
+				var obj = {
+					classes: [],
+					contents: '일치하는 포스트가 없습니다.'
+				}
+				ejsPine.findEjsAddress(req, res, 'unknown', obj);	
 			}
 		});
 	});

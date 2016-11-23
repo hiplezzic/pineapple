@@ -2,7 +2,7 @@
 // /router/auth.js
 //-------------------------------------
 
-function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy, address, googleAuthInfo) {
+function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy, ejsPine, googleAuthInfo) {
 
 	var fs = require('fs');
 	var googleAuthObj = JSON.parse(fs.readFileSync(googleAuthInfo)).web;
@@ -17,7 +17,7 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 	var GoogleStrategy = GoogleStrategy;
 	var Passport_pine = require('../node_js/passport_pine');
 	var passportPine = new Passport_pine(passport, googleAuthObj);
-	var address = address;
+	var ejsPine = ejsPine;
 
 	var express = require('express');
 	this.router = express.Router();
@@ -25,7 +25,7 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 	passportPine.serializeUser(mysqlConnection);
 
 	this.router.get('/register', function (req, res) {
-		res.render('./layout', {ejsAddress: address['ejs']['/auth/register'], hrefAddress: address['href']});
+		ejsPine.findEjsAddress(req, res, 'register');
 	});
 	this.router.post('/register', function (req, res, next) {
 		var hasherOpts = {};
@@ -42,14 +42,18 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 					});
 				});
 			} else {
-				res.render('./layout', {ejsAddress: address['ejs']['/error']['unauth'], hrefAddress: address['href'], errStr: '이미 해당 아이디 혹은 닉네임이 존재합니다.'});
+				var obj = {
+					classes: ['auth'],
+					contents: '이미 해당 아이디 혹은 닉네임이 존재합니다.'
+				}
+				ejsPine.findEjsAddress(req, res, 'unknown', obj);
 			}
 		});
 	});
 
 	passportPine.submitLocal(mysqlConnection, hasher, LocalStrategy);
 	this.router.get('/login', function(req, res, next) {
-		res.render('./layout', {ejsAddress: address['ejs']['/auth/login'], hrefAddress: address['href']});
+		ejsPine.findEjsAddress(req, res, 'login');
 	});
 	this.router.post(
 		'/login', 
@@ -114,7 +118,7 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 	});
 
 	this.router.get('/withdrawal', function (req, res, next) {
-		res.render('./layout', {ejsAddress: address['ejs']['/auth/withdrawal'], hrefAddress: address['href']});
+		ejsPine.findEjsAddress(req, res, 'withdrawal');
 	});
 	this.router.post('/withdrawal', function (req, res, next) {
 		if (req.body.decision == 'true') {
