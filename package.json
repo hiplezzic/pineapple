@@ -1,0 +1,31 @@
+{
+  "name": "pineapple",
+  "version": "1.0.0",
+  "description": "pineapple's server",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "connect-redis": "^3.1.0",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.2",
+    "express-mysql-session": "^1.2.0",
+    "express-session": "^1.14.2",
+    "googleapis": "^14.2.0",
+    "multer": "^1.2.0",
+    "mysql": "^2.12.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "pbkdf2-password": "^1.2.1",
+    "pug": "^2.0.0-beta6",
+    "supervisor": "^0.11.0",
+    "youtube-api": "^2.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

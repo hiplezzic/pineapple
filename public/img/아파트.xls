@@ -1,0 +1,733 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="서울특별시 공간정보 서비스, 지도검색, 테마별 지도, 전자지도, 통계지도, 서울 변천사, 지도전시관 제공" />
+<meta name="keywords" content="서울특별시 공간정보 서비스, 지도검색, 테마별 지도, 전자지도, 통계지도, 서울 변천사, 지도전시관 제공" />
+
+<link href="../Css/bbs1.css" rel="stylesheet" type="text/css" />
+<link href="../Css/sub.css" rel="stylesheet" type="text/css" />
+<!-- script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script-->
+<script type="text/javascript" src="../Citizen/js/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="/Scripts/jquery/jquery.extend.js"charset="utf-8" ></script>
+<script type="text/javascript" src="../common/common.js"> </script>
+<script type="text/javascript" src="../Scripts/Common.js"> </script>
+
+<script type="text/javascript">
+<!--
+function Pop(){
+window.open("../login.html","Smallwindow","width=507,height=460","scrollbars=no");
+}
+//-->
+function changetab(v){
+	for(i=1;i<=2;i++){
+		if(i==v){
+		    document.getElementById("tabname"+i);	
+			document.getElementById("tab"+i).style.display="";			
+		}else{
+			document.getElementById("tabname"+i);
+			document.getElementById("tab"+i).style.display="none";
+			
+		}
+	}
+}
+
+
+function toggleImage(obj)
+{
+	if(obj.src.indexOf("mc_7.jpg")>-1) obj.src = "../image/mn_7.jpg";
+	else obj.src = "../image/mc_7.jpg";
+}
+
+$(document).ready(function() {
+
+	$("#navi ul li div").hide(); 
+
+	$("#navi>ul>li:lt(4)").hover(function ()
+        {
+			$(this).children("div").show();
+        },function()
+        {
+            $(this).children("div").hide();
+		});
+
+	$("#navi>ul>li:eq(4)").click(function()
+	{
+		var div = $(this).children("div");
+		
+		div.toggle();
+	});
+
+	$("#navi .tap:eq(4) div").click(function()
+	{
+		toggleImage(document.getElementById("imgToggle"));
+	});
+
+});// document ready
+</script>
+<style type="text/css">
+pre { display:none }
+code { background-color: #ffc }
+pre code { background-color: #eee }
+
+.pics {padding:0; margin:0; overflow: hidden }
+.pics img {background-color: #eee; top:0; left:0 }
+.tblist {
+	line-height:20pt;
+	font-weight:bolder;
+	margin:4px 0;
+	padding:0;
+	font-size:9pt;
+}
+@-moz-document url-prefix() {
+.tblist {
+line-height:20pt;
+font-weight:bolder;
+margin:2px 0;
+padding:0;
+font-size:9pt;
+}
+}
+@-moz-document url-prefix() {
+.tdb {
+margin-top:5px;
+}
+}
+@-moz-document url-prefix() {
+.tdb2 {
+margin-top:4px;
+}
+}
+.tblist ul {
+	line-height:0;
+	margin:0;
+}
+.tblist ul li {
+	line-height:12pt;
+	font-weight:normal;
+	padding:2px 0;
+}
+.tblist ul li a:link {
+	color:#747474;
+	font-size:9pt;
+}
+.tblist ul li a:hover {
+	color:#90abc0;font-size:9pt;
+}
+.tblist ul li a:visited {
+	color:#747474;
+	font-size:9pt;
+}
+.tblist ul li a:active {
+	color:#90abc0;font-size:9pt;
+}
+.tblist ul li ul {
+	margin:5px 0;
+}
+.tblist ul li ul li {
+	font-size:8pt;
+	line-height:14pt;
+}
+.tblist ul li ul li a:link, .tblist ul li ul li a:hover, .tblist ul li ul li a:active, .tblist ul li ul li a:visited {
+	font-size:8pt;
+	color:#54788f;
+	margin-left:10px;
+}
+#header {
+    width:100%;	
+	background:url('../image/bg_navi.gif') repeat-x;
+    }
+#navi {	
+	width:1004px;
+	margin:0 auto;
+	position:relative;
+	height:38px;
+	text-align:middle;
+	/* display:inline-block; */
+	z-index:50;
+}
+#num1 {}
+#num2 {position:absolute;left:173px;top:115px; }
+#num3 {position:absolute;left:304px;top:115px;}
+#num4 {position:absolute;left:435px;top:115px;}
+</style>
+
+
+
+<!-- 통합검색 검색어 자동완성 기능 Script 추가사항 시작-->
+<!-- <script type="text/javascript" src="../SearchF/jquery-autocomplete/jquery.autocomplete.js"></script>
+<link rel="stylesheet" href="../SearchF/jquery-autocomplete/jquery.autocomplete.css" type="text/css" />-->
+<!-- 통합검색 검색어 자동완성 기능 Script 추가사항 끝-->
+<script type="text/javascript">
+$(function(){
+	//$('.main-menu').navigation({m:5, n:4});
+	$('.left').subNavigation(14 , 15 );
+	//통합검색 검색어 자동완성 기능 Script 추가사항 
+	//$("#qry").autocomplete("/SearchF/responseData.jsp");
+
+});
+
+function fn_HistoryPopup(WebServerIp,DT_YEAR,FLASH_NAME,BF,AF,CONTENTS){
+	var history2_link	=	WebServerIp+"/History2/history2View.jsp?DT_YEAR="+DT_YEAR+"&FLASH_NAME="+FLASH_NAME+"&BF="+BF+"&AF="+AF+"&CONTENTS="+CONTENTS;
+	fn_Popup(history2_link, '', 1100, 800,'no');
+}
+
+function fn_sel(){
+	$('#sub_lan').toggle();
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+
+<!-- 스킵네비게이션 -->
+<div id="skipnavigation">
+<h2 class="main_hidden">스킵네비게이션</h2>
+<ul>
+    <li><a href="#mainWarp" title="본문바로가기">본문바로가기</a></li>
+    <li><a href="#header" title="전체메뉴 바로가기">전체메뉴 바로가기</a></li>
+</ul>
+</div>
+ <!-- //스킵네비게이션 -->
+
+<div id="bg_img" style="width:1000px; overflow:hidden;">
+	<!--상단-->
+  <div id="wraphead" style="position:relative;">
+    <div id="wrap"> 
+      <!-- 로고버튼 -->
+      <div id="logo"> <a class="logo" href="/index.jsp"> <img src="/image/logo_1.jpg" alt="함께만드는 함께늘리는 서울지도" /> </a> </div>
+      
+      <!-- 로고버튼 --> 
+      
+      <!-- 검색버튼 -->
+      <div class="winwin">
+      	<form id="searchForm1" name="searchForm1" method="get" action="/SearchF/search.jsp">
+        <ul class="Retrieval11">
+          <li>
+            <input id="qry" type="text"   title="검색바" size="25" name="qry" style="border:#119dfe 2px solid;font-family:gulim; font-size:9pt; height:14px;" />
+          </li>
+          <li>
+            <input id="btn_search" title="검색" type="image" src="/image/gs.jpg" alt="검색" style="margin-left:5px;" onclick="javascript:fn_CheckFullSearchForm()" />
+          </li>
+          <li>
+            <input id="btn_help" title="도움말" type="image" src="/image/dm.jpg" alt="도움말" style="margin-left:5px;" onclick="fn_Popup('/SearchF/help/usermanual.jsp', '', 670, 400, 'yes'); return false;" />
+          </li>
+        </ul>
+        </form>
+      </div>
+      <!-- 검색버튼 --> 
+      
+      <!-- 이용안내,사이트맵등 -->
+      <div class="searchul2">
+        <ul>
+          <li><a href="../Guide/Site_guide.jsp"><img src="/image/link_button_1.jpg" alt="이용안내"/></a></li>
+          <li><a href="../Guide/Map_guide.jsp"> <img src="/image/link_button_2.jpg" alt="사이트맵"/></a></li>
+          <!--<li><a href="https://gis.seoul.go.kr/SeoulGis/NewChinaMap.jsp" onclick="$(function(){fn_SetCounter('CHINAMAP');}); ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewChinaMap.jsp', 'CHINAMAP'); return false;" onkeypress="$(function(){fn_SetCounter('CHINAMAP');}); ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewChinaMap.jsp', 'CHINAMAP'); return false;"> <img src="/image/link_button_3.jpg" alt="首尔地圖" /></a></li>
+          <li><a href="https://gis.seoul.go.kr/SeoulGis/NewJapanMap.jsp" onclick="$(function(){fn_SetCounter('JAPANMAP');}); ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewJapanMap.jsp', 'JAPANMAP'); return false;" onkeypress="$(function(){fn_SetCounter('JAPANMAP');});ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewJapanMap.jsp', 'JAPANMAP'); return false;"> <img src="/image/link_button_4.jpg" alt="ソウルの地圖" /></a></li> -->
+          <li>
+	         <div id="select_language">
+				<h2>LANGUAGE</h2>
+				<a href="#" onclick="fn_sel(); return false;"><img src="../Images/Main/New/btn_language.gif" alt="버튼" /></a>
+				<ul style="display:none;" id="sub_lan">
+					<li><a href="http://gis.seoul.go.kr:80/SeoulGis/NewEnglishMap.jsp" onclick="$(function(){fn_SetCounter('ENGMAP');});ff_OnFullPopup('http://gis.seoul.go.kr:80/SeoulGis/NewEnglishMap.jsp', 'ENGMAP'); fn_sel(); return false;" onkeypress="$(function(){fn_SetCounter('ENGMAP');});ff_OnFullPopup('http://gis.seoul.go.kr:80/SeoulGis/NewEnglishMap.jsp', 'ENGMAP'); return false;">SEOUL MAP</a></li>
+					<li><a href="http://gis.seoul.go.kr:80/SeoulGis/NewChinaMap.jsp" onclick="$(function(){fn_SetCounter('CHINAMAP');}); ff_OnFullPopup('http://gis.seoul.go.kr:80/SeoulGis/NewChinaMap.jsp', 'CHINAMAP'); fn_sel(); return false;" onkeypress="$(function(){fn_SetCounter('CHINAMAP');}); ff_OnFullPopup('http://gis.seoul.go.kr:80/SeoulGis/NewChinaMap.jsp', 'CHINAMAP'); return false;">首尔地图</a></li>
+					<li><a href="http://gis.seoul.go.kr:80/SeoulGis/NewJapanMap.jsp" onclick="$(function(){fn_SetCounter('JAPANMAP');}); ff_OnFullPopup('http://gis.seoul.go.kr:80/SeoulGis/NewJapanMap.jsp', 'JAPANMAP'); fn_sel(); return false;" onkeypress="$(function(){fn_SetCounter('JAPANMAP');});ff_OnFullPopup('http://gis.seoul.go.kr:80/SeoulGis/NewJapanMap.jsp', 'JAPANMAP'); return false;">ソウルの地図</a></li>
+				</ul>
+			  </div>
+          </li>
+        </ul>
+        <!--<ul class="btn">
+          <li><a href="#" onclick="fn_Zoom('plus')"><img src="/image/btn_plus.gif" alt="plus" /></a></li>
+          <li><a href="#" onclick="fn_Zoom('minus')"><img src="/image/btn_minus.gif" alt="minus" /></a></li>
+        </ul>-->
+      </div>
+      
+      <div class="topBanner">
+      	<a href="/Citizen/NewCitizenList.jsp?Mode=108" target="_blank"><img src="/image/btn_top_banner_new.gif" alt="스마트 불편신고" style="display:block;" /></a>
+      </div>
+    </div>
+  </div>
+	<!--///////////////////////////////////////////네비게이션 시작/////////////////////////////////////////////////////////-->
+ <div id="header">
+  <div id="navi" style="width:1004px;">
+    <!--<ul class="tap1">-->
+    <ul style="width:1004px;">
+      <li class="tap" style="margin-left:61px;"><a href="https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;"><img src="../image/mn_1.jpg" onmouseover="this.src='../image/mc_1.jpg'" onmouseout="this.src='../image/mn_1.jpg'" alt="지도서비스" /></a> 
+        <!--지도서비스 시작-->
+        <div class="menutap1" style="height:170px;">
+		<p style="position:relative;z-index:1000;">
+		<span style="position:absolute;left:243px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:474px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		</p>
+          <ul class="urllist" style="float:left;display:inline; margin-left:28px;padding-top:14px;">
+            <li class="tblist"><a href="https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;">지도검색</a>
+              <ul>
+                <li><a href="https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;">서울시지도검색</a></li>
+                <li><a href="http://aerogis.seoul.go.kr/main.jsp" target="_blank">항공사진서비스</a></li>
+                <li><a href="https://gis.seoul.go.kr/SeoulGis/NewMetroInfo.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewMetroInfo.jsp', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewMetroInfo.jsp', ''); return false;">도시정보지도서비스</a></li>
+                <li><a href="https://gis.seoul.go.kr/SeoulGis/NewStatisticsMap.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewStatisticsMap.jsp', 'STATICS'); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewStatisticsMap.jsp', 'STATICS'); return false;">통계지도서비스</a></li>
+                <li><a href="http://surveycp.seoul.go.kr/"  target="_blank">지반정보통합관리시스템</a></li>
+                <!-- <li><a href="#">좌표관리지도</a></li>-->
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist allline" style="float:left;display:inline; margin-left:137px;padding-top:14px;padding-right:147px;height:176px;;border-right:1px solid #e4e3e3;">
+            <li class="tblist"><a href="#3차원지도" onclick="ff_OnFullPopup('http://3dgis.seoul.go.kr/SearchMap_3D/index.jsp', ''); return false;" onkeypress="ff_OnFullPopup('http://3dgis.seoul.go.kr/SearchMap_3D/index.jsp', ''); return false;">3차원지도</a>
+              <ul>
+                <li><a href="#3차원지도" onclick="ff_OnFullPopup('http://3dgis.seoul.go.kr/SearchMap_3D/index.jsp', ''); return false;" onkeypress="ff_OnFullPopup('http://3dgis.seoul.go.kr/SearchMap_3D/index.jsp', ''); return false;">3차원 입체지도</a></li>
+                <!-- li><a href="#3차원 동영상" onclick="open_popup(1030, 774); return false;" onkeypress="window.open('http://210.90.46.79/SearchMap_3D/3DMovie/3d_movie.html','' ,'width=1030,height=774'); return false;">3차원&nbsp;동영상</a></li-->
+              </ul>
+            </li>
+          </ul>
+          <img src="../image/tabimage1.jpg" style="margin-top:3px;margin-bottom:3px" alt="지도 서비스 서울시 공간정보 지도검색 및 3차원 지도 동영상 항공사진 등 지도관련 서비스를 확인할 수 있습니다." /> </div>
+      </li>
+      <!--지도서비스 끝--> 
+      <!--시민참여마당 시작-->
+      <li class="tap" style="margin-left:133px;"><a href="../People_Part/Research.jsp""> <img src="../image/mn_2.jpg" alt="시민참여마당" onmouseover="this.src='../image/mc_2.jpg'" onmouseout="this.src='../image/mn_2.jpg'" /></a>
+        <div class="menutap2" style="display:none;">		
+		<p style="position:relative;z-index:1000;">
+		<span style="position:absolute;left:207px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:382px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:545px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>	
+		</p>
+          <ul class="urllist" style="float:left;display:inline;font-weight:bolder; line-height:27pt;height:176px;">
+            <li style="padding-left:28px;padding-top:14px;padding-right:112px;;border-bottom:1px solid #e4e3e3;"><a href="/Citizen/NewCitizenList.jsp?Mode=108" target="_blank" title="스마트 불편신고">스마트&nbsp;불편신고</a></li>
+            <li style="padding-left:28px;padding-right:112px;border-bottom:1px solid #e4e3e3;"><a href="https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=99" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=99', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=99', ''); return false;">UCC등록</a></li>
+            <li style="padding-left:28px;padding-right:112px;border-bottom:1px solid #e4e3e3;"><a href="../People_Part/GIS_register2.jsp">업소정보등록</a></li>
+            <li style="padding-left:28px;padding-right:112px;"><a href="../People_Part/NewGroupSearch.jsp?BLDG_TYPE1=P00&BLDG_DEF=DEF1">업종별검색</a></li>
+          </ul>
+          <ul class="urllist" style="float:left;display:inline;font-weight:bolder; line-height:27pt;height:176px;border-left:1px solid #e4e3e3;">
+            <li style="padding-left:20px;padding-top:14px;padding-right:82px;border-bottom:1px solid #e4e3e3;"><a href="#지도수정요청" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=96', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=96', ''); return false;">지도수정요청</a></li>
+            <li style="padding-left:20px;padding-right:82px;border-bottom:1px solid #e4e3e3;"><a href="https://gis.seoul.go.kr/SeoulGis/MyMapMake.html" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/MyMapMake.html', 'MADEMYMAP'); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/MyMapMake.html', 'MADEMYMAP'); return false;">내지도만들기</a></li>
+            <li class="tblist" style="padding-left:20px;"><a href="../People_Part/Research.jsp">사용자의견수렴</a>
+              <ul>
+                <li><a href="../People_Part/Poll.jsp">참여</a></li>
+                <li><a href="../People_Part/Research.jsp">결과보기</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist" style="float:left;display:inline;font-weight:bolder; line-height:27pt;height:176px;border-left:1px solid #e4e3e3;border-right:1px solid #e4e3e3;">
+            <li style="padding-left:20px;padding-top:14px;padding-right:82px;border-bottom:1px solid #e4e3e3;"><a href="../People_Part/Free_Board.jsp">자유게시판</a></li>
+          </ul>
+          <span><img src="../image/bg_navitab_3.jpg" alt="시민참여마당 스마트 불편신고,내지도만들기, 자유게시판 및 자료실 등을 통해 서울시민
+  모두가 참여할 수 있습니다." /></span> </div>
+      </li>
+      <!--시민참여마당 끝--> 
+      <!--공간정보교육센터 시작-->
+      <li class="tap" style="margin-left:133px;"><a href="/Edu_Center/Gis_Edu.jsp"><img src="../image/mn_3.jpg" alt="공간정보교육센터" onmouseover="this.src='../image/mc_3.jpg'" onmouseout="this.src='../image/mn_3.jpg'" /></a>
+        <div class="menutap3" style="display:none;">
+		<p style="position:relative;z-index:1000;">
+		<span style="position:absolute;left:179px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:385px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:591px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>	
+		</p>
+          <ul class="urllist" style="float:left;display:inline;width:200px;">
+            <li class="tblist" style="padding:14px 20px 12px 28px;border-bottom:1px solid #e4e3e3;"><a href="/Edu_Center/Gis_Edu.jsp">공간정보&nbsp;학습과정</a>
+              <ul>
+                <li><a href="/Edu_Center/Gis_Edu.jsp">공간정보&nbsp;일반과정</a></li>
+                <li><a href="/Edu_Center/Gis_Tool.jsp">공간정보&nbsp;툴과정</a></li>
+              </ul>
+            </li>
+            <!--어린이 학습마당 시작-->
+            <li class="tblist" style="margin-top:10px;padding-left:28px;"><a href="/GisPlus/KidsGame/index.html" onclick="fn_Popup('/GisPlus/KidsGame/index.html','KidsGame','1012','620','1');return false;" onkeypress="fn_Popup('/GisPlus/KidsGame/index.html','KidsGame','1012','620','1');return false;">어린이&nbsp;학습마당</a>
+              <ul>
+                <li><a href="/GisPlus/KidsGame/index.html" onclick="fn_Popup('/GisPlus/KidsGame/index.html','KidsGame','1012','620','1');return false;" onkeypress="fn_Popup('/GisPlus/KidsGame/index.html','KidsGame','1012','620','1');return false;">지도학습마당</a></li>
+                <li><a href="/CultureMap/KidsMap.html" onclick="fn_Popup('/CultureMap/KidsMap.html','KidsMap','1012','680','0');return false;">문화재지도</a></li>
+              </ul>
+            </li>
+            <!--어린이 학습마당 끝-->
+          </ul>
+          <ul class="urllist allline"  style="float:left;display:inline;padding-top:14px;height:296px;">
+            <li class="tblist"><a href="../Information/District.jsp">정보마당</a>
+              <ul>
+                <li><a href="../Information/Seoul.jsp">지도로보는변천사</a>
+				<ul>
+                <li><a href="../Information/Seoul.jsp">*서울시변천사</a></li>
+				</ul>
+				</li>
+                <li><a href="../Information/Pavilion.jsp">지도전시관</a></li>
+                <li><a href="../Information/Word.jsp">공간정보용어사전</a></li>
+                <li><a href="../Information/Institution.jsp">공간정보관련법제도</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist allline" style="float:left;display:inline;margin-left:86px;padding-top:14px;height:316px;padding-right:86px;border-right:1px solid #e4e3e3;">
+            <!--이용안내 여기서 시작-->
+            <li class="tblist"><a href="../Guide/Site_guide.jsp">이용안내</a>
+              <ul>
+                <li><a href="../Guide/Site_guide.jsp">사이트이용안내</a></li>
+                <li><a href="../Guide/Map_guide.jsp">사이트맵</a></li>
+                <li><a href="../Guide/Flex_map.jsp">지도OpenAPI</a>
+                  <ul>
+                    <li><a href="../Guide/Flex_map.jsp">*이용약관/지도키발급</a></li>
+                    <li><a href="../Guide/Flex_class.jsp">*클래스참조</a></li>
+                    <li><a href="../Guide/Flex_tutorial.jsp">*튜토리얼</a></li>
+                    <li><a href="../Guide/Flex_summary.jsp">*지도OpenAPI예제</a></li>
+                    <li><a href="../Guide/Flex_mashup.jsp">*매쉬업/좌표변환</a></li>
+                    <li><a href="../Guide/Flex_contracture.jsp">*지도OpenAPI구축현황</a></li>
+                  </ul>
+                </li>
+                <li><a href="../Guide/Flex_dbopenapi.jsp">주제별DB OpenAPI</a>
+                  <ul>
+                    <li><a href="../Guide/Flex_dbopenapi.jsp">*사용법</a></li>                    
+                  </ul>
+                </li>
+                
+                <li><a href="../Guide/notice_list.jsp">공지사항</a></li>
+              </ul>
+            </li>
+            <!--이용안내 여기서 끝-->
+          </ul>
+          <span><img src="../image/bg_navitab3_2.jpg" alt="GIS교육센터 공간정보 학습과정, 어린이학습마당 정보마당,이용안내 등의 정보를 이용하실 수 있습니다." /></span> </div>
+      </li>
+      <!--공간정보교육센터 끝--> 
+       <!--분야별지리정보 시작-->
+      <li class="tap" style="margin-left:133px;"><img src="../image/mn_6.jpg"  alt="분야별 공간정보" onmouseover="this.src='../image/mc_6.jpg'" onmouseout="this.src='../image/mn_6.jpg'" />
+        <div class="menutap4" style="display:none;height:180px;">
+		<p style="position:relative;z-index:1000;">
+		<span style="position:absolute;left:138px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:302px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:471px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:634px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:800px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		</p>
+          <ul class="urllist" style="float:left;display:inline;margin-left:28px;padding-top:14px;height:160px;">
+            <li class="tblist"><a target="_blank" href="http://topis.seoul.go.kr">교통</a>
+              <ul>
+                 <li><a target="_blank" href="http://topis.seoul.go.kr">서울교통정보센터</a></li>
+                <li><a target="_blank" href="http://www.smrt.co.kr/index.jsp">서울도시철도공사</a></li>  
+                <li><a target="_blank" href="http://tbs.seoul.kr/traffic.do?method=index" >교통정보 지도서비스</a></li>
+                <li><a target="_blank" href="http://www.seoulmetro.co.kr">서울메트로</a></li>                
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist allline" style="float:left;display:inline;margin-left:65px;padding-top:14px;height:160px;">
+            <li class="tblist"><a target="_blank" href="http://klis.seoul.go.kr/sis/index.html">토지/부동산</a>
+              <ul>
+                <li><a target="_blank" href="http://klis.seoul.go.kr/sis/index.html">한국토지정보시스템</a></li>
+                <li><a target="_blank" href="http://address.seoul.go.kr/main/main.aspx">도로명주소 안내시스템</a></li>
+                <li><a target="_blank" href="http://urban.seoul.go.kr">서울도시계획포털</a></li>
+                <li><a target="_blank" href="http://land.seoul.go.kr/" >서울부동산정보광장</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist allline" style="float:left;display:inline;margin-left:44px;padding-top:14px;height:160px;">
+            <li class="tblist"><a target="_blank" href="http://www.seoul.go.kr/info/organ/subhomepage/env/statistics/11367_index.html">환경</a>
+              <ul>
+                <li><a target="_blank" href="http://www.seoul.go.kr/info/organ/subhomepage/env/statistics/11367_index.html">한강수질현황</a></li>
+                <!-- li><a target="_blank" href="http://cheonggye.seoul.go.kr/main/multi_tour.jsp" >멀티미디어3D청계천</a></li-->
+				<li><a target="_blank" href="http://cleanair.seoul.go.kr/air_city.htm?method=measure" >지역별대기<br/>오염도</a></li>
+                <li><a target="_blank" href="http://parks.seoul.go.kr">서울의공원</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist allline" style="float:left;display:inline;margin-left:48px;padding-top:14px;height:160px;">
+            <li class="tblist"><a target="_blank" href="http://hangang.seoul.go.kr">문화관광</a>
+              <ul>                
+                <li><a target="_blank" href="http://hangang.seoul.go.kr">한강시민공원GIS</a></li>
+                <li><a target="_blank" href="http://www.visitseoul.net/kr/statics.do?_method=includeHtml&category=/&fname=tour_walk&m=0004004004001&p=04">도보관광코스</a></li>
+                <li><a target="_blank" href="http://www.cheonggyecheon.or.kr/">청계천홈페이지</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist allline" style="float:left;display:inline;margin-left:43px;padding-top:14px;height:160px;">
+            <li class="tblist"><a target="_blank" href="http://hidigp.seoul.go.kr/personal">도시관리</a>
+              <ul>
+                 <li><a target="_blank" href="http://hidigp.seoul.go.kr/personal">도로굴착복구시스템</a></li>
+                <li><a target="_blank" href="http://surveycp.seoul.go.kr">지반정보통합관리시스템</a></li>
+                <li><a target="_blank" href="http://cis.seoul.go.kr">건설알림이</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist allline" style="float:left;display:inline;margin-left:46px;padding-top:14px;height:160px;">
+            <li class="tblist"><a target="_blank" href="http://gis.seoul.go.kr/Guide/Flex_contracture.jsp">지도Open API구축현황</a>
+              <ul>
+               <li><a target="_blank" href="http://culture.seoul.go.kr/index.do?_method=meet">e문화복덕방</a></li>
+                <li><a target="_blank" href="http://www.bikeseoul.com/index.do">서울특별시 공공자전거</a></li>
+                <li><a target="_blank" href="http://bike.seoul.go.kr/02_map/map_1.html">서울자전거지도</a></li>
+                <li><a target="_blank" href="http://sports.seoul.go.kr/spt_2011/index.jsp">서울시체육정보통합사이트</a></li>
+                <!-- li><a target="_blank" href="http://203.142.216.250:8080/safetyzone/login.do">서울M2MU-안전관제시스템</a></li-->
+                <li style="margin-bottom:60px;"><a target="_blank" href="http://boandeung.seocho.go.kr/slamp/user/map.do">서초구보안등관리시스템</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!--분야별지리정보 끝-->
+      <li class="tap" style="margin-left:133px;"><img id="imgToggle" src="../image/mn_7.jpg" alt="전체메뉴" onclick="toggleImage(this);" /> 
+        <!--전체메뉴 탭넣기 시작-->
+        <div class="menutap5" style="height:410px;">
+		<p style="position:relative;z-index:1000;">
+		<span style="position:absolute;left:149px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:295px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:461px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:637px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		<span style="position:absolute;left:793px;top:0;"><img src="/image/img_navi.jpg" alt="" /></span>
+		</p>
+          <ul class="urllist alltab1">
+            <li class="tblist" style="padding-left:28px;padding-bottom:8px;"><a href="https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;">지도검색</a>
+              <ul>
+                <li><a href="https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp', ''); return false;">서울시지도검색</a></li>
+                <li><a href="http://aerogis.seoul.go.kr/main.jsp" target="_blank">항공사진서비스</a></li>
+                <li><a href="https://gis.seoul.go.kr/SeoulGis/NewMetroInfo.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewMetroInfo.jsp', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewMetroInfo.jsp', ''); return false;">도시정보지도서비스</a></li>
+                <li><a href="https://gis.seoul.go.kr/SeoulGis/NewStatisticsMap.jsp" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewStatisticsMap.jsp', 'STATICS'); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/NewStatisticsMap.jsp', 'STATICS'); return false;">통계지도서비스</a></li>
+                <li><a href="http://surveycp.seoul.go.kr/"  target="_blank">지반정보통합관리시스템</a></li>
+                <!-- li><a href="#">좌표관리시스템</a></li-->
+              </ul>
+            </li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;padding-top:8px;padding-left:28px;padding-right:75px;"><a href="#3차원지도" onclick="ff_OnFullPopup('http://3dgis.seoul.go.kr/SearchMap_3D/index.jsp', ''); return false;" onkeypress="ff_OnFullPopup('http://3dgis.seoul.go.kr/SearchMap_3D/index.jsp', ''); return false;">3차원지도</a>
+              <ul>
+                <li><a href="#3차원지도" onclick="ff_OnFullPopup('http://3dgis.seoul.go.kr/SearchMap_3D/index.jsp', ''); return false;" onkeypress="ff_OnFullPopup('http://3dgis.seoul.go.kr/SearchMap_3D/index.jsp', ''); return false;">3D입체지도</a></li>
+                <!-- li><a href="#3차원 동영상" onclick="open_popup(1030, 774); return false;" onkeypress="window.open('http://210.90.46.79/SearchMap_3D/3DMovie/3d_movie.html','' ,'width=1030,height=774'); return false;">3차원동영상</a></li-->
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist alltab2 allline" style="padding-left:0;padding-top:11px;line-height:27pt;">
+            <li style="padding-left:20px;"><a href="/Citizen/NewCitizenList.jsp?Mode=108" target="_blank" title="스마트불편신고">스마트불편신고</a></li>
+            <li style="border-top:1px solid #e4e3e3;padding-left:20px;"><a href="https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=99" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=99', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=99', ''); return false;">UCC등록</a></li>
+            <li style="border-top:1px solid #e4e3e3;padding-left:20px;"><a href="https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=94" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=94', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=94', ''); return false;">업소정보등록</a></li>
+            <li style="border-top:1px solid #e4e3e3;padding-left:20px;"><a href="../People_Part/NewGroupSearch.jsp?BLDG_TYPE1=P00&BLDG_DEF=DEF1">업종별검색</a></li>
+            <li style="border-top:1px solid #e4e3e3;padding-left:20px;"><a href="#지도수정요청" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=96', ''); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/newLifeMap_ssl.jsp?Mode=96', ''); return false;">지도수정요청</a></li>
+            <li style="border-top:1px solid #e4e3e3;padding-left:20px;"><a href="https://gis.seoul.go.kr/SeoulGis/MyMapMake.html" onclick="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/MyMapMake.html', 'MADEMYMAP'); return false;" onkeypress="ff_OnFullPopup('https://gis.seoul.go.kr/SeoulGis/MyMapMake.html', 'MADEMYMAP'); return false;">내지도만들기</a></li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;padding-top:8px;padding-bottom:10px;margin:0;padding-left:20px;"><a href="../People_Part/Research.jsp">사용자의견수렴</a>
+              <ul>
+                <li><a href="../People_Part/Poll.jsp">참여</a></li>
+                <li><a href="../People_Part/Research.jsp">결과보기</a></li>
+              </ul>
+            </li>
+            <li style="border-top:1px solid #e4e3e3;padding-left:20px;"><a href="../People_Part/Free_Board.jsp">자유게시판</a></li>       
+          </ul>
+          <ul class="urllist alltab3 allline" style="padding-left:0;">
+            <li class="tblist" style="padding-left:20px;padding-bottom:8px;"><a href="/Edu_Center/Gis_Edu.jsp">공간정보&nbsp;학습과정</a>
+              <ul>
+                <li><a href="/Edu_Center/Gis_Edu.jsp">공간정보&nbsp;일반과정</a></li>
+                <li><a href="/Edu_Center/Gis_Tool.jsp">공간정보&nbsp;툴과정</a></li>
+              </ul>
+            </li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;padding-top:8px;padding-left:20px;padding-bottom:8px;"><a href="/GisPlus/KidsGame/index.html" onclick="fn_Popup('/GisPlus/KidsGame/index.html','KidsGame','1012','620','1');return false;" onkeypress="fn_Popup('/GisPlus/KidsGame/index.html','KidsGame','1012','620','1');return false;">어린이&nbsp;학습마당</a>
+              <ul>
+                <li><a href="/GisPlus/KidsGame/index.html" onclick="fn_Popup('/GisPlus/KidsGame/index.html','KidsGame','1012','620','1');return false;" onkeypress="fn_Popup('/GisPlus/KidsGame/index.html','KidsGame','1012','620','1');return false;">지도학습마당</a></li>
+                <li><a href="/CultureMap/KidsMap.html" onclick="fn_Popup('/CultureMap/KidsMap.html','KidsMap','1012','680','0');return false;">문화재지도</a></li>
+              </ul>
+            </li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;padding-top:8px;padding-left:20px;padding-bottom:0;"><a href="../Information/District.jsp">정보마당</a>
+              <ul>
+                <li><a href="../Information/Seoul.jsp">지도로보는변천사</a>
+                  <ul>
+                    <li><a href="../Information/Seoul.jsp">*서울시변천사</a></li>
+				    <!-- li><a href="../Information/District.jsp">*행정구역변천사</a></li-->
+				  </ul>
+				</li>
+              </ul>
+            </li>         
+			<li class="tblist" style="border-top:1px solid #e4e3e3;margin:0;padding-left:20px;line-height:27pt;"><a href="../Information/Pavilion.jsp">지도전시관</a></li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;margin:0;padding-left:20px;line-height:27pt;"><a href="../Information/Word.jsp">공간정보 용어사전</a></li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;margin:0;padding-left:20px;line-height:27pt;"><a href="../Information/Institution.jsp">공간정보 관련법제도</a></li>
+		  </ul>
+          <ul class="urllist alltab4 allline">
+            <li class="tblist"><a href="../Guide/Site_guide.jsp">이용안내</a>
+              <ul>
+                <li><a href="../Guide/Site_guide.jsp">사이트이용안내</a></li>
+                <li><a href="../Guide/Map_guide.jsp">사이트맵</a></li>
+                <li><a href="../Guide/Flex_map.jsp">지도OpenAPI</a>
+                  <ul>
+                    <li><a href="../Guide/Flex_map.jsp">*이용약관/지도키발급</a></li>
+                    <li><a href="../Guide/Flex_class.jsp">*클래스참조</a></li>
+                    <li><a href="../Guide/Flex_tutorial.jsp">*튜토리얼</a></li>
+                    <li><a href="../Guide/Flex_summary.jsp">*지도OpenAPI예제</a></li>
+                    <li><a href="../Guide/Flex_mashup.jsp">*매쉬업/좌표변환</a></li>
+                    <li><a href="../Guide/Flex_contracture.jsp">*지도OpenAPI구축현황</a></li>
+                    <!-- li><a href="../Guide/Flex_ApiFreeboard.jsp">*지도OpenAPI게시판</a></li-->
+                  </ul>
+                </li>
+                <li><a href="../Guide/Flex_dbopenapi.jsp">주제별DB OpenAPI</a>
+                  <ul>
+                    <li><a href="../Guide/Flex_dbopenapi.jsp">*사용법</a></li>                    
+                  </ul>
+                </li>
+                <li><a href="../Guide/notice_list.jsp">공지사항</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist alltab5 allline" style="padding-left:0;">
+            <li class="tblist" style="padding-left:20px;padding-bottom:8px;"><a href="http://topis.seoul.go.kr">교통</a>
+              <ul>
+                 <li><a target="_blank" href="http://topis.seoul.go.kr">서울교통정보센터</a></li>
+                <li><a target="_blank" href="http://www.smrt.co.kr/index.jsp">서울도시철도공사</a></li>  
+                <li><a target="_blank" href="http://tbs.seoul.kr/traffic.do?method=index" >교통정보 지도서비스</a></li>
+                <li><a target="_blank" href="http://www.seoulmetro.co.kr">서울메트로</a></li>
+              
+              </ul>
+            </li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;padding:8px;padding-left:20px;"><a target="_blank" href="http://klis.seoul.go.kr/sis/index.html">토지/부동산</a>
+              <ul>
+                 <li><a target="_blank" href="http://klis.seoul.go.kr/sis/index.html">한국토지정보시스템</a></li>
+                <li><a target="_blank" href="http://address.seoul.go.kr/main/main.aspx">도로명주소 안내시스템</a></li>
+                <li><a target="_blank" href="http://urban.seoul.go.kr">서울도시계획포털</a></li>
+                <li><a target="_blank" href="http://land.seoul.go.kr/" >서울부동산정보광장</a></li>
+              </ul>
+            </li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;padding:8px;padding-left:20px;"><a target="_blank" href="http://www.seoul.go.kr/info/organ/subhomepage/env/statistics/11367_index.html">환경</a>
+              <ul>                
+                <li><a target="_blank" href="http://www.seoul.go.kr/info/organ/subhomepage/env/statistics/11367_index.html">한강수질현황</a></li>
+                <!-- li><a target="_blank" href="http://cheonggye.seoul.go.kr/main/multi_tour.jsp" >멀티미디어3D청계천</a></li-->
+				<li><a target="_blank" href="http://cleanair.seoul.go.kr/air_city.htm?method=measure" >지역별대기오염도</a></li>
+                <li><a target="_blank" href="http://parks.seoul.go.kr">서울의공원</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="urllist alltab6 allline" style="padding-left:0;">
+            <li class="tblist" style="padding-left:20px;padding-bottom:8px;"><a target="_blank" href="http://hangang.seoul.go.kr">문화관광</a>
+              <ul>
+                <li><a target="_blank" href="http://hangang.seoul.go.kr">한강시민공원GIS</a></li>
+                <li><a target="_blank" href="http://www.visitseoul.net/kr/statics.do?_method=includeHtml&category=/&fname=tour_walk&m=0004004004001&p=04">도보관광코스</a></li>
+                <li><a target="_blank" href="http://www.cheonggyecheon.or.kr/">청계천홈페이지</a></li>
+              </ul>
+            </li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;padding-left:20px;padding-top:8px;padding-bottom:8px;"><a target="_blank" href="http://hidigp.seoul.go.kr/personal">도시관리</a>
+              <ul>
+               <li><a target="_blank" href="http://hidigp.seoul.go.kr/personal">도로굴착복구시스템</a></li>
+                <li><a target="_blank" href="http://surveycp.seoul.go.kr">지반정보통합관리시스템</a></li>
+                <li><a target="_blank" href="http://cis.seoul.go.kr">건설알림이</a></li>
+              </ul>
+            </li>
+            <li class="tblist" style="border-top:1px solid #e4e3e3;padding-left:20px;padding-top:8px;"><a target="_blank" href="http://culture.seoul.go.kr/index.do?_method=meet">지도Open API구축현황</a>
+              <ul>
+                <li><a target="_blank" href="http://culture.seoul.go.kr/index.do?_method=meet">e문화복덕방</a></li>
+                <li><a target="_blank" href="http://www.bikeseoul.com/index.do">서울특별시 공공자전거</a></li>
+                <li><a target="_blank" href="http://bike.seoul.go.kr/02_map/map_1.html">서울자전거지도</a></li>
+                <li><a target="_blank" href="http://sports.seoul.go.kr/spt_2011/index.jsp">서울시체육정보통합사이트</a></li>
+                <!-- li><a target="_blank" href="http://203.142.216.250:8080/safetyzone/login.do">서울M2MU-안전관제시스템</a></li-->
+                <li style="margin-bottom:60px;"><a target="_blank" href="http://boandeung.seocho.go.kr/slamp/user/map.do">서초구보안등관리시스템</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!--////////////////////////////////////////////////전체메뉴 탭넣기 끝//////////////////////////////////////////--> 
+      </li>
+    </ul>
+  </div>
+ </div>
+	
+<script type="text/javascript">
+$("#navi ul li div").hide(); 
+</script>
+
+	<div id="sub_container" style="overflow:hidden;width:1004px;">
+		<div id="leftmenu" style="width:256px;float:left;margin-bottom:60px;">
+			
+		</div>
+		
+		<div id="rightcont" style="width:748px;overflow:hidden;_margin-left:-5px;">
+			 
+
+<div style="margin:120px auto;position:relative;width:663px;height:250px;background:url(http://gis.seoul.go.kr/image/check.jpg);">
+<div style="position:absolute;left:321px;top:120px;font-size:13px;line-height:20px;font-family:'dotum';">
+<p>
+ 관리자에게 문의 부탁드립니다.</p>
+</div>
+
+          
+
+        </div>
+        <div class="clean" style="margin-top:20px;"></div>
+    </div>
+    <div id="footer">
+		 
+<script type="text/javascript">         
+function newWinMove(url)
+{
+	if(url != "")
+	{
+		window.open(url);
+	}
+}
+</script>
+
+    <div class="footer">
+      <div class="text1">
+      	<span class="textbox">
+      		<a href="http://www.seoul.go.kr/v2007/help/privacy.html?Sid=601_01" target="_blank">개인정보보호방침</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      		<a href="http://www.seoul.go.kr/v2007/help/email.html" target="_blank">이메일무단수집거부</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      		<a href="http://www.seoul.go.kr/v2007/help/privacy3.html" target="_blank">서비스이용약관</a>
+		</span>
+        <div class="textbox2">관련사이트
+          <select name="test" style="width:170px;" onchange="newWinMove(this.value);">
+            <option>:::선택하세요:::</option>
+            <option value="">======정부기관======</option>
+			<option value="http://www.mltm.go.kr">국토해양부</option>
+			<option value="http://www.mopas.go.kr">행정안전부</option>
+			<option value="http://www.kcc.go.kr">방송통신위원회</option>
+			<option value="http://www.ngii.go.kr">국토지리정보원</option>
+			<option value="http://www.mest.go.kr">교육과학기술부</option>
+			<option value="http://www.lh.or.kr">한국토지주택공사</option>
+			<option value="http://www.kcsc.co.kr">대한지적공사</option>
+            <option value="">======학회협회======</option>
+			<option value="http://www.kagis.or.kr">한국지리정보학회</option>
+			<option value="http://www.kasm.or.kr">대한측량협회</option>
+			<option value="http://www.kgeography.or.kr">대한지리학회</option>
+			<option value="http://www.ksrs.or.kr">대한원격탐사학회</option>
+			<option value="http://www.kpa1959.or.kr">대한국토,도시계획학회</option>
+			<option value="http://www.lbskorea.or.kr">LBS산업협의회</option>
+            <option value="">======연구기관======</option>
+			<option value="http://www.krihs.re.kr">국토연구원</option>
+			<option value="http://www.kict.re.kr">한국건설기술연구원</option>
+			<option value="http://www.koti.re.kr">한국교통연구원</option>
+			<option value="http://www.gps.re.kr">한국천문연구원 우주측지연구부</option>
+			<option value="http://www.sdi.re.kr">서울연구원</option>
+			<option value="http://www.nia.or.kr">한국정보화진흥원</option>
+            <option value="">======기타======</option>
+			<option value="https://www.nsic.go.kr">국가공간정보유통시스템</option>
+			<option value="http://www.onnara.go.kr">온나라부동산정보</option>
+          </select>
+        </div>
+      </div>
+      <div style="width:1044px;margin:0 auto;height:100px;position:relative;"> <span class="hiseoul"><a href="http://www.seoul.go.kr/" target="_blank"><img src="../image/logo.gif" width="80" height="50" alt="희망서울" /></a></span>
+        <div style="font-size:11px;">
+          <p style="position:absolute; top:20px; left:125px;">서울특별시 중구 덕수궁길 15 (서소문동 37번지)</p>
+          <p style="position:absolute; top:40px; left:125px;">서울특별시 서소문청사 공간정보담당관 문의전화 : 02-2133-2838   이메일 : gis@seoul.go.kr</p>
+          <p style="position:absolute; top:60px; left:125px;">Copyright 2013. Seoul Metropolitan Government all rights reserved.</p>
+        </div>
+        <span class="banner"> <a href="http://creativecommons.org/licenses/by-nc-nd/2.0/kr/" target="_blank"><img src="../image/banner_1.jpg" alt="비영리-저작권표시-변경금지" /></a> 
+        <a href="http://120dasan.seoul.go.kr/" target="_blank"><img src="../image/banner_2.jpg" alt="120다산콜센터" /></a> </span> 
+        </div>
+    </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
+

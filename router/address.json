@@ -1,0 +1,139 @@
+{
+	"href": {
+		"home": "/",
+		"register": "/auth/register",
+		"login_local": "/auth/login",
+		"login_google": "/auth/google",
+		"logout": "/auth/logout",
+		"withdrawal": "/auth/withdrawal",
+		"write_post": "/post/writepost",
+		"search": "/post/search",
+		"archive": "/post/archive",
+		"post": "/post/no/",
+		"upload": "/upload/youtube"
+	},
+	"ejs": {
+		"/": {
+			"unauth": {
+				"header": "./unauth/header_default.ejs",
+				"sidebar": "./unauth/sidebar_default.ejs",
+				"section": "./unauth/section_default.ejs",
+				"footer": "./unauth/footer_default.ejs"
+			},
+			"auth": {
+				"header": "./auth/header_default.ejs",
+				"sidebar": "./auth/sidebar_default.ejs",
+				"section": "./auth/section_default.ejs",
+				"footer": "./auth/footer_default.ejs"
+			}
+		},
+		"/auth/register": {
+			"header": "./unauth/header_default.ejs",
+			"sidebar": "./unauth/sidebar_default.ejs",
+			"section": "./unauth/auth/section_register.ejs",
+			"footer": "./unauth/footer_default.ejs"
+		},
+		"/auth/login": {
+			"header": "./unauth/header_default.ejs",
+			"sidebar": "./unauth/sidebar_default.ejs",
+			"section": "./unauth/auth/section_login.ejs",
+			"footer": "./unauth/footer_default.ejs"
+		},
+		"/auth/google": {
+			"header": "./unauth/header_default.ejs",
+			"sidebar": "./unauth/sidebar_default.ejs",
+			"section": "./unauth/auth/section_google.ejs",
+			"footer": "./unauth/footer_default.ejs"
+		},
+		"/auth/withdrawal": {
+			"header": "./auth/header_default.ejs",
+			"sidebar": "./auth/sidebar_default.ejs",
+			"section": "./auth/auth/section_withdrawal.ejs",
+			"footer": "./auth/footer_default.ejs"
+		},
+		"/post/writepost": {
+			"unauth": {
+				"header": "./unauth/header_default.ejs",
+				"sidebar": "./unauth/sidebar_default.ejs",
+				"section": "./error/require_auth.ejs",
+				"footer": "./unauth/footer_default.ejs"
+			},
+			"auth": {
+				"header": "./auth/header_default.ejs",
+				"sidebar": "./auth/sidebar_default.ejs",
+				"section": "./auth/post/section_writepost.ejs",
+				"footer": "./auth/footer_default.ejs"
+			}
+		},
+		"/post/no": {
+			"unauth": {
+				"header": "./unauth/header_default.ejs",
+				"sidebar": "./unauth/sidebar_default.ejs",
+				"section": "./unauth/post/section_postview.ejs",
+				"footer": "./unauth/footer_default.ejs"
+			},
+			"auth": {
+				"header": "./auth/header_default.ejs",
+				"sidebar": "./auth/sidebar_default.ejs",
+				"section": "./auth/post/section_postview.ejs",
+				"footer": "./auth/footer_default.ejs"
+			}
+		},
+		"/post/archive": {
+			"unauth": {
+				"header": "./unauth/header_default.ejs",
+				"sidebar": "./unauth/sidebar_default.ejs",
+				"section": "./archive.ejs",
+				"footer": "./unauth/footer_default.ejs"
+			},
+			"auth": {
+				"header": "./auth/header_default.ejs",
+				"sidebar": "./auth/sidebar_default.ejs",
+				"section": "./archive.ejs",
+				"footer": "./auth/footer_default.ejs"
+			}
+		},
+		"/post/search": {
+			"unauth": {
+				"header": "./unauth/header_default.ejs",
+				"sidebar": "./unauth/sidebar_default.ejs",
+				"section": "./search.ejs",
+				"footer": "./unauth/footer_default.ejs"
+			},
+			"auth": {
+				"header": "./auth/header_default.ejs",
+				"sidebar": "./auth/sidebar_default.ejs",
+				"section": "./search.ejs",
+				"footer": "./auth/footer_default.ejs"
+			}
+		},
+		"/upload/youtube": {
+			"unauth": {
+				"header": "./unauth/header_default.ejs",
+				"sidebar": "./unauth/sidebar_default.ejs",
+				"section": "./error/require_auth.ejs",
+				"footer": "./unauth/footer_default.ejs"
+			},
+			"auth": {
+				"header": "./auth/header_default.ejs",
+				"sidebar": "./auth/sidebar_default.ejs",
+				"section": "./auth/upload/section_youtube.ejs",
+				"footer": "./auth/footer_default.ejs"
+			}
+		},
+		"/error": {
+			"unauth": {
+				"header": "./unauth/header_default.ejs",
+				"sidebar": "./unauth/sidebar_default.ejs",
+				"section": "./error.ejs",
+				"footer": "./unauth/footer_default.ejs"
+			},
+			"auth": {
+				"header": "./auth/header_default.ejs",
+				"sidebar": "./auth/sidebar_default.ejs",
+				"section": "./error.ejs",
+				"footer": "./auth/footer_default.ejs"
+			}
+		}
+	}
+}

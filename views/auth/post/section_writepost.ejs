@@ -1,0 +1,27 @@
+<div>포스트 작성</div>
+<br>
+<div>
+	<form method="post" enctype="multipart/form-data">
+		<div>
+			<div>제목</div>
+			<input type="text" name="title">
+		</div>
+		<br>
+		<div>
+			<div>이미지</div>
+			<input type="file" name="imgfile">
+		</div>
+		<br>
+		<div>
+			<div>동영상 url</div>
+			<input type="text" name="videourl">
+		</div>
+		<br>
+		<div>
+			<input type="submit">
+		</div>
+	</form>
+	<br>
+	<div><a href="<%- hrefAddress.upload %>">유투브 업로드</a></div>
+	<br>
+</div>
