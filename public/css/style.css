@@ -74,15 +74,17 @@ a {
 	color: #fff;
 }
 
+#section .row {
+	width: 267px; height: 170px;
+}
 #section .column {
-	width: 100px; height: 100px;
-	float: left;
-	border: solid gray 1px;
 }
 #section .column img {
 	width: 100px; height: 100px;
 }
-
+#section #streaming {
+	width: 534px; height: 320px;
+}
 
 #banner {
 	width: 90px; height: 40px;

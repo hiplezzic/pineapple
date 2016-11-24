@@ -10,7 +10,7 @@ function Router () {
 	this.route = function (app, mysqlConnection, hasher, upload, passport, LocalStrategy, GoogleStrategy, googleAuthInfo) {
 
 		var Home = require('./home');
-		var home = new Home(ejsPine);
+		var home = new Home(mysqlConnection, ejsPine);
 		var homeRouter = home.router;
 		var Auth = require('./auth');
 		var auth = new Auth(mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy, ejsPine, googleAuthInfo);

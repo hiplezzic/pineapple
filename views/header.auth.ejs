@@ -1,26 +1,26 @@
 <div id="top_nav">
 	<div id="menubar">
-		<img src="../img/menubar.png">
+		<img src="<%- address.img.menubar %>">
 	</div>
 	<div id="banner">
-		<a href="<%- hrefAddress.home %>"><img src="../img/sajiyo.jpg"></a>
+		<a href="<%- address.path.home %>"><img src="<%- address.img.sajiyo %>"></a>
 	</div>
 	<div id="searchbar">
 		<form action="search" method="get">
 			<input id="searchbar" type="text" name="q">
-			<img id="search" src="../img/search.png">
+			<img id="search" src="<%- address.img.search %>">
 			<input class="hidden" type="submit">
 		</form>
 	</div>
 	<div id="auth">
 		<div id="upload">
-			<a href="<%- hrefAddress.logout %>"><img src="../img/upload.png"></a>
+			<a href="<%- address.path.logout %>"><img src="<%- address.img.upload %>"></a>
 		</div>
 		<div id="withdrawal">
-			<a href="<%- hrefAddress.withdrawal %>">withdrawal</a>
+			<a href="<%- address.path.withdrawal %>">withdrawal</a>
 		</div>
 		<div id="logout">
-			<a href="<%- hrefAddress.logout %>"><img src="../img/login_status.png"></a>
+			<a href="<%- address.path.logout %>"><img src="<%- address.img.login_status %>"></a>
 		</div>
 	</div>
 </div>

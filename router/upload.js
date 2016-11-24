@@ -58,6 +58,28 @@ function Upload (mysqlConnection, upload, ejsPine) {
 	this.router.get('/youtube/callback', function (req, res, next) {
 
 	});
+
+	this.router.get('/test', function (req, res, next) {
+		ejsPine.findEjsAddress(req, res, 'uploadtest');
+	});
+	this.router.post('/test', function (req, res, next) {
+		var query = 'INSERT INTO youtube (title, url, uploader) VALUES (\'' + req.body.title +'\',\''+ req.body.url +'\',\''+ req.session.passport.user +'\')';
+		mysqlConnection.query(query, function (err, rows, fields) {
+			if (err) {
+				throw err;
+				var obj = {
+					classes: ['auth'],
+					contents: req.session.passport.user
+				}
+				ejsPine.findEjsAddress(req, res, 'unknown', obj);
+			} else {
+				var query = 'SELECT * FROM youtube WHERE title=? AND url=?';
+				mysqlConnection.query(query, [req.body.title, req.body.url], function (err, rows, fields) {
+					res.redirect('/post/no/' + rows[0]['no']);
+				});
+			}
+		});
+	});
 }
 
 module.exports = Upload;

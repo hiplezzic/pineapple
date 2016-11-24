@@ -2,7 +2,7 @@
 // /router/home.js
 //-------------------------------------
 
-function Home (ejsPine) {
+function Home (mysqlConnection, ejsPine) {
 
 	var ejsPine = ejsPine;
 	
@@ -10,7 +10,16 @@ function Home (ejsPine) {
 	this.router = express.Router();
 
 	this.router.get('', function(req, res){
+		var query = 'SELECT * FROM youtube';
+		mysqlConnection.query(query, function (err, rows, fields) {
+			var obj = {
+				classes: [],
+				contents: rows
+			}
+			ejsPine.findEjsAddress(req, res, 'home', obj);
+		});
 		var obj = undefined;
+		/* 로그인할 경우 닉네임 표시
 		if (req.session.passport && req.session.passport.user) {
 			var obj = {
 				classes: ['auth'],
@@ -18,6 +27,7 @@ function Home (ejsPine) {
 			}
 		}
 		ejsPine.findEjsAddress(req, res, 'home', obj);
+		*/
 	});
 }
 

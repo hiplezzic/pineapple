@@ -1,19 +1,23 @@
 <div id="top_nav">
-	<div id="banner">
-		<a href="<%- hrefAddress.home %>"><img src="../img/sajiyo.jpg"></a>
+	<div id="menubar">
+		<img src="<%- address.img.menubar %>">
 	</div>
-	<div>
+	<div id="banner">
+		<a href="<%- address.path.home %>"><img src="<%- address.img.sajiyo %>"></a>
+	</div>
+	<div id="searchbar">
 		<form action="search" method="get">
-			<input type="text" name="q">
-			<input type="submit">
+			<input id="searchbar" type="text" name="q">
+			<img id="search" src="<%- address.img.search %>">
+			<input class="hidden" type="submit">
 		</form>
 	</div>
 	<div id="auth">
 		<div>
-			<a href="<%- hrefAddress.login_local %>">login</a>
+			<a href="<%- address.path.login_local %>">login</a>
 		</div>
 		<div>
-			<a href="<%- hrefAddress.register %>">register</a>
+			<a href="<%- address.path.register %>">register</a>
 		</div>
 	</div>
 </div>

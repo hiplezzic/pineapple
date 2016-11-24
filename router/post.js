@@ -50,28 +50,23 @@ function Post (mysqlConnection, upload, ejsPine) {
 	});
 
 	this.router.get('/no/:no', function (req, res, next) {
-		var query = 'SELECT * FROM board WHERE no=?';
+		var query = 'SELECT * FROM youtube WHERE no=?';
 		mysqlConnection.query(query, [req.params.no], function (err, rows, fields) {
-			var img = '';
-			var videourl = '';
-
-			if (JSON.parse(rows[0]['contents'])['img']) {
-				img = JSON.parse(rows[0]['contents'])['img'];
-			}
-			if (JSON.parse(rows[0]['contents'])['videourl']) {
-				videourl = JSON.parse(rows[0]['contents'])['videourl'].replace('watch?v=', 'embed/');
+			var url = '';
+			if (rows[0]['url']) {
+				url = rows[0]['url'].replace('watch?v=', 'embed/');
 			}
 
 			var obj = {
 				classes: [],
-				contents: {title: rows[0]['title'], img: img, videourl: videourl}
+				contents: {title: rows[0]['title'], url: url}
 			}
 			ejsPine.findEjsAddress(req, res, 'postview', obj);
 		});
 	});
 
 	this.router.get('/archive', function (req, res, next) {
-		var query = 'SELECT * FROM board';
+		var query = 'SELECT * FROM youtube';
 		mysqlConnection.query(query, function (err, rows, fields) {
 			var obj = {
 				classes: [],
@@ -82,7 +77,7 @@ function Post (mysqlConnection, upload, ejsPine) {
 	});
 
 	this.router.get('/search', function (req, res, next) {
-		var query = 'SELECT * FROM board WHERE title=?';
+		var query = 'SELECT * FROM youtube WHERE title=?';
 		mysqlConnection.query(query, [req.query.q], function (err, rows, fields) {
 			if (rows.length) {
 				var obj = {
