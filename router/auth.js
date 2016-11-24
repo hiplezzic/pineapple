@@ -7,17 +7,10 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 	var fs = require('fs');
 	var googleAuthObj = JSON.parse(fs.readFileSync(googleAuthInfo)).web;
 
-	var app = app;
-	var mysqlConnection = mysqlConnection;
 	var Mysql_pine = require('../node_js/Mysql_pine');
 	var mysqlPine = new Mysql_pine(mysqlConnection);
-	var hasher = hasher;
-	var passport = passport;
-	var LocalStrategy = LocalStrategy;
-	var GoogleStrategy = GoogleStrategy;
 	var Passport_pine = require('../node_js/passport_pine');
 	var passportPine = new Passport_pine(passport, googleAuthObj);
-	var ejsPine = ejsPine;
 
 	var express = require('express');
 	this.router = express.Router();

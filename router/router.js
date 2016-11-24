@@ -4,7 +4,6 @@
 
 function Router () {
 
-	var fs = require('fs');
 	var Ejs_pine = require('../node_js/ejs_pine.js');
 	var ejsPine = new Ejs_pine;
 
