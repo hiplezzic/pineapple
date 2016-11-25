@@ -156,21 +156,8 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 		mysqlConnection.query(query, [req.session.passport.user], function (err, rows, fields) {
 // console.log(rows);
 			var accessToken = rows[0].access_token;
-			var getPlayListIdUrl = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true&access_token='+ accessToken;
-			request(getPlayListIdUrl, function (err, getRes, body) {
-// console.log(getPlayListIdUrl);
-// console.log(body);
-				var playListId = JSON.parse(body).items[0].contentDetails.relatedPlaylists.uploads;
-				var getVideoArrUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId='+ playListId +'&access_token='+ accessToken;
-				request(getVideoArrUrl, function (err, getRes, body) {
-					var obj = {
-			 			classes: ['auth'],
-			 			contents: JSON.parse(body).items
-			 		}
-			 		res.cookie('access_token', accessToken);
-					ejsPine.findEjsAddress(req, res, 'motherboard', obj);
-				});
-			});
+			res.cookie('access_token', accessToken);
+			ejsPine.findEjsAddress(req, res, 'motherboard');
 		});
 	});
 }
