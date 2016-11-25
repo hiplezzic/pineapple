@@ -4,6 +4,7 @@
 
 function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy, ejsPine, googleAuthInfo) {
 
+	var request = require('request');
 	var fs = require('fs');
 	var googleAuthObj = JSON.parse(fs.readFileSync(googleAuthInfo)).web;
 
@@ -114,6 +115,17 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 		});
 	});
 
+	this.router.get('/status', function (req, res, next) {
+		var query = 'SELECT * FROM accounts WHERE nickname=?';
+		mysqlConnection.query(query, [req.session.passport.user], function (err, rows, fields) {
+			var obj = {
+				classes: ['auth'],
+				contents: rows
+			}
+			ejsPine.findEjsAddress(req, res, 'status', obj);
+		});
+	});
+
 	this.router.get('/withdrawal', function (req, res, next) {
 		ejsPine.findEjsAddress(req, res, 'withdrawal');
 	});
@@ -125,6 +137,42 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 		}
 	});
 
+	this.router.get('/upgradepj', function (req, res, next) {
+		ejsPine.findEjsAddress(req, res, 'upgradepj');
+	});
+	this.router.post('/upgradepj', function (req, res, next) {
+		if (req.body.decision == 'true') {
+			var query = 'UPDATE accounts SET pj=? WHERE nickname=?';
+			mysqlConnection.query(query, [true, req.session.passport.user], function (err, rows, fields) {
+				if (err) throw err;
+				res.redirect('/auth/status');
+			});
+		}
+	});
+
+	this.router.get('/motherboard', function (req, res, next) {
+		//SELECT \'access_token\' ~ 이라고 query 작성시 {access_token: 'access_token'}이라고 뜬다
+		var query = 'SELECT * FROM accounts WHERE nickname=?';
+		mysqlConnection.query(query, [req.session.passport.user], function (err, rows, fields) {
+// console.log(rows);
+			var accessToken = rows[0].access_token;
+			var getPlayListIdUrl = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true&access_token='+ accessToken;
+			request(getPlayListIdUrl, function (err, getRes, body) {
+// console.log(getPlayListIdUrl);
+// console.log(body);
+				var playListId = JSON.parse(body).items[0].contentDetails.relatedPlaylists.uploads;
+				var getVideoArrUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId='+ playListId +'&access_token='+ accessToken;
+				request(getVideoArrUrl, function (err, getRes, body) {
+					var obj = {
+			 			classes: ['auth'],
+			 			contents: JSON.parse(body).items
+			 		}
+			 		res.cookie('access_token', accessToken);
+					ejsPine.findEjsAddress(req, res, 'motherboard', obj);
+				});
+			});
+		});
+	});
 }
 
 module.exports = Auth;

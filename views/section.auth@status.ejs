@@ -1,0 +1,18 @@
+<div>Personal Status</div>
+<br>
+<div>Username</div>
+<div><%- obj[0].auth_id %></div>
+<br>
+<div>Nickname</div>
+<div><%- obj[0].nickname %></div>
+<br>
+<div>PJ</div>
+<% if(obj[0].pj) { %>
+	<div>True</div>
+<% } else { %>
+<div>False</div>
+<% } %>
+<br>
+<% if(!obj[0].pj) { %>
+	<a href="<%- address.path.upgradepj %>">Upgrade to PJ</a>
+<% } %>

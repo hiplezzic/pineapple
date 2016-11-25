@@ -60,11 +60,17 @@ function Passport_pine (passport, googleAuthObj) {
 				clientSecret: googleAuthObj.client_secret,
 				callbackURL: googleAuthObj.redirect_uris[0]
 			},
-			function(accessToken, refreshToken, profile, done) {
+			function(accessToken, refreshToken, params, profile, done) {
 				mysqlConnection.query('SELECT \'auth_id\' FROM accounts WHERE auth_id=\'google:'+ profile.id +'\'', function (err, rows, fields) {
 					if (err) throw err;
 					if (!rows.length) {
-						mysqlConnection.query('INSERT INTO accounts (auth_id, username, password, salt, nickname) VALUES ( ?, ?, ?, ?, ? )', ['google:'+ profile.id, profile.id, 'password', 'salt', profile.id + profile.displayName], function (err, rows, fields) {
+						var query = 'INSERT INTO accounts (auth_id, username, password, salt, nickname) VALUES ( ?, ?, ?, ?, ? )';
+						mysqlConnection.query(query, ['google:'+ profile.id, profile.id, 'password', 'salt', profile.id + profile.displayName], function (err, rows, fields) {
+							if (err) throw err;
+						});
+					} else {
+						var query = 'UPDATE accounts SET access_token=? WHERE auth_id=?';
+						mysqlConnection.query(query, [accessToken, 'google:'+ profile.id], function (err, rows, fields) {
 							if (err) throw err;
 						});
 					}
