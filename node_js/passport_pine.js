@@ -14,14 +14,11 @@ function Passport_pine (passport, googleAuthObj) {
 		passport.deserializeUser(function(nickname, done) {
 			var query = 'SELECT * FROM accounts WHERE nickname=?';
 			mysqlConnection.query(query, [nickname], function (err, rows, fields) {
-				if (err) {
-					throw err;
+				if (err) throw err;
+				if (!rows.length) {
+					done('no setup id yet', false);
 				} else {
-					if (!rows.length) {
-						done('no setup id yet', false);
-					} else {
-						return done(null, nickname);
-					}
+					return done(null, nickname);
 				}
 			});
 		});
@@ -61,9 +58,9 @@ function Passport_pine (passport, googleAuthObj) {
 			{
 				clientID: googleAuthObj.client_id,
 				clientSecret: googleAuthObj.client_secret,
-				callbackURL: googleAuthObj.redirect_uris[1]
+				callbackURL: googleAuthObj.redirect_uris[0]
 			},
-			function(token, tokenSecret, profile, done) {
+			function(accessToken, refreshToken, profile, done) {
 				mysqlConnection.query('SELECT \'auth_id\' FROM accounts WHERE auth_id=\'google:'+ profile.id +'\'', function (err, rows, fields) {
 					if (err) throw err;
 					if (!rows.length) {
@@ -71,9 +68,8 @@ function Passport_pine (passport, googleAuthObj) {
 							if (err) throw err;
 						});
 					}
+					done(null, profile.id + profile.displayName);
 				});
-
-				done(null, profile.id + profile.displayName);
 			}
 		));
 	};

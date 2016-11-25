@@ -1,0 +1,176 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+body {
+  font-family: 'Nanum Gothic', serif;
+  font-size: 14px;
+  color: #555;
+}
+
+a {
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+#container {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#header {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  margin: 0px;
+  border-bottom: solid #d8d8d8 1.5px;
+  background: white;
+  #top_nav {
+    float: none;
+    div {
+      float: left;
+      margin: 0px 5px;
+    }
+    #banner {
+      width: 90px;
+      height: 40px;
+      padding: 5px 0 0 5px;
+      img {
+        width: 90px;
+        height: 40px;
+      }
+    }
+
+    #menubar {
+      width: 15px;
+      height: 15px;
+      padding: 17px 0 0 17px;
+      img {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    #searchbar {
+      width: 50%;
+      padding: 11px 0 0 50px;
+      input#searchbar {
+        width: 80%;
+        height: 25px;
+        float: left;
+        padding: 0;
+      }
+      img#search {
+        width: 15.5px;
+        height: 15.5px;
+        float: left;
+        padding: 5.8px 18px 5.8px 18px;
+        margin-left: 1px;
+        border: solid #a8a8a8 1.8px;
+        border-radius: 10%;
+        background: #f8f8f8;
+      }
+    }
+
+    #auth {
+      float: right;
+      margin: 0px 5px;
+      #upload {
+        width: 27px;
+        height: 27px;
+        padding: 11px 30px 0 0;
+        img {
+          width: 27px;
+          height: 27px;
+          padding: 0;
+        }
+      }
+      #withdrawal {
+        display: none;
+      }
+      img {
+        width: 27px;
+        height: 27px;
+        padding: 11px 20px 0 0;
+      }
+    }
+  }
+}
+
+#sidebar {
+  width: 200px;
+  height: 100%;
+  margin-top: 60px;
+  float: left;
+  position: fixed;
+  border-right: solid #d8d8d8 1px;
+  .subject {
+    width: 150px;
+    height: 28px;
+    clear: both;
+    margin: 0 25px 0 25px;
+    background: #ff8800;
+    img {
+      width: 16px;
+      height: 16px;
+      float: left;
+      padding: 5px;
+    }
+    a {
+      float: left;
+      padding: 5px;
+      color: #fff;
+    }
+  }
+}
+
+#section {
+  padding: 15px;
+  margin: 50px 0 0 200px;
+  #streaming {
+    background: gray;
+    #streaming-iframe {
+      width: 534px;
+      margin: 0 auto;
+    }
+  }
+  #sumnail_bundle {
+    width: 1000px;
+    height: 1000px;
+    margin: 0 auto;
+    border: solid #d8d8d8 1px;
+    .row {
+      width: 223px;
+      height: 145px;
+      float: left;
+      margin: 20px 10px;
+    }
+    .column img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+#footer {
+  height: 50px;
+  margin-left: 200px;
+  clear: both;
+  border-top: solid #d8d8d8 1px;
+}
+
+
+@media screen and (max-width: 450px) {
+  #sidebar {
+    display: none;
+  }
+  #section {
+    margin: 50px 0 0 0;
+  }
+  #footer {
+    margin: 0;
+  }
+}

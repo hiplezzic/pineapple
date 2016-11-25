@@ -66,22 +66,26 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 		passport.authenticate(
 			'google',
 			{
-				access_type: "offline",
+				/*access_type: "offline",
 				client_id: googleAuthObj.client_id,
 				client_secret: googleAuthObj.secret,
-				//google+ 로그인 경우
-				//scope: 'https://www.googleapis.com/auth/plus.login',
-				scope: 
-					[
-						"https://www.googleapis.com/auth/youtube.upload",
-						'https://www.googleapis.com/auth/plus.login'
-					],
 				project_id: googleAuthObj.project_id,
 				auth_uri: googleAuthObj.auth_uri,
 				token_uri: googleAuthObj.token_uri,
 				auth_provider_x509_cert_url: googleAuthObj.auth_provider_x509_cert_url,
 				redirect_uris: googleAuthObj.redirect_uris,
-				javascript_origins: googleAuthObj.javascript_origins
+				javascript_origins: googleAuthObj.javascript_origins*/
+				scope: 
+					[
+						"https://www.googleapis.com/auth/youtube",
+						"https://www.googleapis.com/auth/youtube.force-ssl",
+						"https://www.googleapis.com/auth/youtube.readonly",
+						"https://www.googleapis.com/auth/youtube.upload",
+						"https://www.googleapis.com/auth/youtubepartner",
+						"https://www.googleapis.com/auth/youtubepartner-channel-audit",
+						'https://www.googleapis.com/auth/plus.login'
+					],
+				
 			}
 		)
 	);

@@ -1,15 +1,13 @@
-<div>Welcome!</div>
+
 <br>
-<div>
-	<div id="streaming">
-		<div id="streaming-iframe"><iframe width="534" height="300" src="<%- obj[0]['url'].replace('watch?v=', 'embed/') %>" frameborder="0" allowfullscreen></iframe></div>
-		<div id="streaming-title"><a href="<%- address.path.post + obj[0]['no'] %>"><%- obj[0]['title'] %></a></div>
-	</div>
-	<% for (var i=1; i<obj.length; i++) { %>
-		<div class="row">
-			<div class="column"><iframe width="267" height="150" src="<%- obj[i]['url'].replace('watch?v=', 'embed/') %>" frameborder="0" allowfullscreen></iframe></div>
-			<div class="column"><a href="<%- address.path.post + obj[i]['no'] %>"><%- obj[i]['title'] %></a></div>
-		</div>
-	<% }; %>
+<div id="streaming">
+	<div id="streaming-iframe"><iframe width="534" height="300" src="<%- obj[0]['url'].replace('watch?v=', 'embed/') %>?showinfo=0&autoplay=0" frameborder="0" allowfullscreen="1"></iframe></div>
 </div>
-`
+<div id="sumnail_bundle">
+<% for (var i=1; i<obj.length; i++) { %>
+	<div class="row">
+		<div class="column"><iframe width="223" height="125" src="<%- obj[i]['url'].replace('watch?v=', 'embed/') %>" frameborder="0" allowfullscreen></iframe></div>
+		<div class="column"><a href="<%- address.path.post + obj[i]['no'] %>"><%- obj[i]['title'] %></a></div>
+	</div>
+<% }; %>
+</div>
