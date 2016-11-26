@@ -16,7 +16,7 @@ var getPlayListIdUrl = 'https://www.googleapis.com/youtube/v3/channels?part=cont
 
 httpGetAsync(getPlayListIdUrl, function (result) {
 	var playListId = JSON.parse(result).items[0].contentDetails.relatedPlaylists.uploads;
-	var getVideoArrUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId='+ playListId +'&access_token='+ accessToken;
+	var getVideoArrUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId='+ playListId +'&access_token='+ accessToken +'&maxResults=50';
 	httpGetAsync(getVideoArrUrl, function (result) {
 		//console.log(JSON.parse(result).items[0].contentDetails.videoId);
 		var videoArr = JSON.parse(result).items;

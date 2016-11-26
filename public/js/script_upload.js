@@ -152,32 +152,6 @@ console.log('Finished!');
 				}
 				xmlHttp.send(query);	
 			}
-			
-
-			// var serversideurl = 'http://localhost:81/upload/youtube';
-			// var json = {
-			// 	title: ,
-			// 	url: ,
-			// 	uploader
-			// }
-			// xhr.open('GET', serversideurl, true);
-			// // xhr.setRequestHeader('Authorization', 'Bearer ' + this.token);
-			// xhr.setRequestHeader('Content-Type', 'application/json');
-			// // xhr.setRequestHeader('X-Upload-Content-Length', this.file.size);
-			// // xhr.setRequestHeader('X-Upload-Content-Type', this.contentType);
-
-			// xhr.onload = function(e) {
-			// 	/*if (e.target.status < 400) {
-			// 		var location = e.target.getResponseHeader('Location');
-			// 		this.url = location;
-			// 		this.sendFile_();
-			// 	} else {
-			// 		this.onUploadError_(e);
-			// 	}*/
-			// }
-			// xhr.send(JSON.stringify(json));
-
-			
 
 
 			/*$('#video-id').text(this.videoId);

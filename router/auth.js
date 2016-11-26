@@ -159,10 +159,8 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 	});
 
 	this.router.get('/motherboard', function (req, res, next) {
-		//SELECT \'access_token\' ~ 이라고 query 작성시 {access_token: 'access_token'}이라고 뜬다
-		var query = 'SELECT * FROM accounts WHERE nickname=?';
+		var query = 'SELECT access_token FROM accounts WHERE nickname=?';
 		mysqlConnection.query(query, [req.session.passport.user], function (err, rows, fields) {
-// console.log(rows);
 			var accessToken = rows[0].access_token;
 			ejsPine.findEjsAddress(req, res, 'motherboard');
 		});
