@@ -23,7 +23,7 @@ function Ejs_pine () {
 			search: 	'/post/search',
 			archive: 	'/post/archive',
 			post: 		'/post/no/',
-			upload: 	'/upload/youtube'
+			upload_youtube: '/upload/youtube'
 		},
 		img: {
 			favorite: '/img/favorite.png',

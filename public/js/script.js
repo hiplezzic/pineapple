@@ -1,30 +1,24 @@
-function httpGetAsync(theUrl, callback) {
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.onreadystatechange = function() { 
-		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-			callback(xmlHttp.responseText);
-	}
-	xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-	xmlHttp.send(null);
+//-------------------------
+// /public/js/script.js
+//-------------------------
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function clickMenubar() {
+    document.getElementById('dropdown').classList.toggle('show');
 }
-var accessToken = document.cookie.split('=')[1];
-var getPlayListIdUrl = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true&access_token='+ accessToken;
 
-httpGetAsync(getPlayListIdUrl, function (result) {
-	var playListId = JSON.parse(result).items[0].contentDetails.relatedPlaylists.uploads;
-	var getVideoArrUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId='+ playListId +'&access_token='+ accessToken;
-	httpGetAsync(getVideoArrUrl, function (result) {
-		//console.log(JSON.parse(result).items[0].contentDetails.videoId);
-		var videoArr = JSON.parse(result).items;
-		var startdiv = document.getElementById('javascript');
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('#dropdownButton')) {
 
-		for (var i = 0; i < videoArr.length; i++) {
-			var tag = document.createElement('iframe');
-			tag.width = 223;
-			tag.height = 125;
-			tag.src = 'https://www.youtube.com/embed/'+ videoArr[i].contentDetails.videoId;
-			startdiv.appendChild(tag);
-		}
-
-	});
-});
+    var dropdowns = document.getElementsByClassName("dropdown_contents");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}

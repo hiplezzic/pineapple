@@ -1,7 +1,8 @@
 <div>유투브 업로드</div>
 <br>
 <div>
-	<form method="post" enctype="multipart/form-data">
+<script type="text/javascript" src="/js/script_upload.js"></script>
+	<!-- <form method="post" enctype="multipart/form-data" onform="UploadVideo.handleUploadClicked()"> -->
 		<div>
 			<div>제목</div>
 			<input type="text" name="title">
@@ -9,16 +10,25 @@
 		<br>
 		<div>
 			<div>동영상 파일</div>
-			<input type="file" name="video">
+			<input type="file" name="file">
 		</div>
 		<br>
 		<div>
 			<div>설명</div>
-			<input type="textarea" name="description">
+			<textarea name="description"></textarea>
+		</div>
+		<br>
+		<div>
+			<div>Privacy Status</div>
+			Public<input type="radio" name="privacyStatus" value="public">
+			Unlisted<input type="radio" name="privacyStatus" value="unlisted">
+			Private<input type="radio" name="privacyStatus" value="private">
 		</div>
 		<br><br>
 		<div>
-			<input type="submit">
+			<!-- <input type="submit"> -->
+			<button onclick="UploadVideo.prototype.handleUploadClicked()">Upload</button>
 		</div>
-	</form>
+	<!-- </form> -->
 </div>
+<script type="text/javascript" src="/js/script_upload.js"></script>

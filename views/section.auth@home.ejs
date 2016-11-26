@@ -1,1 +1,80 @@
 <h1>Hello <%= obj %></h1>
+
+<!-- <script type="text/javascript">
+		var accessToken = 'ya29.Cj6iA7XfI5MXL0JelXW_zeBGe1PSAlX197w0w5-ciVDH6aqVXJRJiSPGn-MeLkAgmvmo-n7ZdYjtHpLdNW_O-Q';
+		var getPlayListIdUrl = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true&access_token='+ accessToken;
+			sendxmlHttpRequest('GET', getPlayListIdUrl, '', function (result) {
+				var playListId = JSON.parse(result).items[0].contentDetails.relatedPlaylists.uploads;
+				var getPlayListItemUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=id%2Csnippet%2CcontentDetails%2Cstatus&playlistId='+ playListId +'&maxResults=1&access_token='+ accessToken;
+				sendxmlHttpRequest('GET', getPlayListItemUrl, '', function (result) {
+					
+
+
+					function objectCombine (params, callback) {
+						first(params, function (result) {
+							callback(result)
+						});
+
+						function first (params, callback) {
+							for (var i = 0; i < Object.keys(params).length; i++) {
+								if (typeof(params[Object.keys(params)[i]]) == 'object') {
+									for (var j = 0; j < Object.keys(params[Object.keys(params)[i]]).length; j++) {
+										params[Object.keys(params)[i] +'_'+ Object.keys(params[Object.keys(params)[i]])[j]] = params[Object.keys(params)[i]][Object.keys(params[Object.keys(params)[i]])[j]];
+									}
+									delete params[Object.keys(params)[i]];
+								}
+							}
+							second (params, function (result) {
+								callback(result);
+							});
+						}
+						function second (params, callback) {
+							for (var i = 0; i < Object.keys(params).length; i++) {
+								if (typeof(params[Object.keys(params)[i]]) == 'object') {
+									first(params, function(result) {
+										callback(result);
+									});
+								}
+							}
+							callback(params);
+						}
+					}
+					function buildQuery (params) {
+						return Object.keys(params).map(function(key) {
+							if (typeof(params[key]) == 'object') {
+								return buildQuery(params[key]);
+							} else {
+								return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+							}
+						}).join('&');
+					};
+
+
+					var resultObj = JSON.parse(result).items[0];
+					var url = 'http://localhost:81/upload/youtube';
+					var query = '';
+					objectCombine(resultObj, function (result) {
+						query = buildQuery(result);
+					});
+					sendxmlHttpRequest('POST', url, query, function (result) {
+						console.log('post to localhost');
+					});
+					console.log(JSON.parse(result).items[0]);
+				});
+			});
+
+		function sendxmlHttpRequest(method, url, query, callback) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() { 
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					callback(xmlHttp.responseText);
+				}
+			}
+			xmlHttp.open(method, url, true); // true for asynchronous 
+			if (method == 'POST') {
+				xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			}
+			xmlHttp.send(query);	
+		}
+
+	</script> -->

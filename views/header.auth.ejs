@@ -1,6 +1,11 @@
 <div id="top_nav">
 	<div id="menubar">
-		<img src="<%- address.img.menubar %>">
+		<button onclick="clickMenubar()" id="dropdownButton"><img src="<%- address.img.menubar %>"></button>
+		<div id="dropdown" class="dropdown_contents">
+			<a href="#">Link 1</a>
+			<a href="#">Link 2</a>
+			<a href="#">Link 3</a>
+		</div>
 	</div>
 	<div id="banner">
 		<a href="<%- address.path.home %>"><img src="<%- address.img.sajiyo %>"></a>

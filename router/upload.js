@@ -14,49 +14,14 @@ function Upload (mysqlConnection, upload, ejsPine) {
 	var google = require('googleapis');
 
 	this.router.get('/youtube', function (req, res, next) {
-		ejsPine.findEjsAddress(req, res, 'youtube', obj);
+		ejsPine.findEjsAddress(req, res, 'youtube');
 	});
-	this.router.post('/youtube', upload.single('video'), function (req, res, next) {
-
-		var OAuth2 = google.auth.OAuth2;
-		var oauth2Client = new OAuth2 (
-			'clientid',
-			'clientpassword',
-			'callback'
-		);
-		oauth2Client.setCredentials({
-			access_token: 'token'
-		});
-
-		console.log(req.file);
-////파일의 오리지날 경로를 찾는것은 아직 모르겠다.
-		//var youtube = google.youtube('v3');
-		/*var params = {
-			resource: {
-				snippet: {
-					title: req.body.title,
-					description: req.body.description
-				},
-				status: {
-					privacyStatus: "private"    
-				}
-			},
-			part: "snippet,status",
-			media: {
-				body: 'fs.createReadStream(req.file.video)'
-			},
-			auth: oauth2Client
-        }
-        */
-/*
-		youtube.videos.insert(params, function (err) {
+	this.router.post('/youtube', function (req, res, next) {
+		var query = 'INSERT INTO youtube (etag, id, videoId, nickname, publishedAt, channelId, playlistId, title_youtube, description, channelTitle, privacyStatus, thumbnails_default_url, thumbnails_default_width, thumbnails_default_height, thumbnails_medium_url, thumbnails_medium_width, thumbnails_medium_height, thumbnails_high_url, thumbnails_high_width, thumbnails_high_height) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+		mysqlConnection.query(query, [req.body.etag, req.body.id, req.body.snippet_resourceId_videoId, req.session.passport.user, req.body.snippet_publishedAt, req.body.snippet_channelId, req.body.snippet_playlistId, req.body.snippet_title, req.body.snippet_description, req.body.snippet_channelTitle, req.body.status_privacyStatus, req.body.snippet_thumbnails_default_url, req.body.snippet_thumbnails_default_width, req.body.snippet_thumbnails_default_height, req.body.snippet_thumbnails_high_url, req.body.snippet_thumbnails_high_width, req.body.snippet_thumbnails_high_height, req.body.snippet_thumbnails_medium_url, req.body.snippet_thumbnails_medium_width, req.body.snippet_thumbnails_medium_height], function (err, rows, fields) {
 			if (err) throw err;
+			res.redirect('/auth/motherboard');
 		});
-*/
-	});
-
-	this.router.get('/youtube/callback', function (req, res, next) {
-
 	});
 
 	this.router.get('/test', function (req, res, next) {

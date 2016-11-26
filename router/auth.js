@@ -97,7 +97,15 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 			{ failureRedirect: 'http://localhost:81/auth/login' }
 		),
 		function(req, res) {
-			res.redirect('http://localhost:81');
+			var query = 'SELECT access_token FROM accounts WHERE nickname=?';
+			mysqlConnection.query(query, [req.session.passport.user], function (err, rows, fields) {
+				if (rows.length) {
+					res.cookie('access_token', rows[0].access_token);
+					res.redirect('http://localhost:81');
+				} else {
+					res.redirect('http://localhost:81');
+				}
+			});
 		}
 	);
 
@@ -156,7 +164,6 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 		mysqlConnection.query(query, [req.session.passport.user], function (err, rows, fields) {
 // console.log(rows);
 			var accessToken = rows[0].access_token;
-			res.cookie('access_token', accessToken);
 			ejsPine.findEjsAddress(req, res, 'motherboard');
 		});
 	});
