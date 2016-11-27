@@ -43,10 +43,11 @@ function Ejs_pine () {
 
 	this.findEjsAddress = function (req, res, path, obj) {	
 		var avatar = {
-			auth: 'unauth'
+			auth: 'unauth',
+			pj: 'customer'
 		}
 		var tagClassObj = {
-			header: 	['auth'],
+			header: 	['auth', 'pj'],
 			sidebar: 	['auth'],
 			section: 	['auth'],
 			footer: 	['auth']
@@ -63,10 +64,11 @@ function Ejs_pine () {
 			pushAvatarIntoTagClassObj(function() {
 				makeTagPropertyArrbyTagClassObj(function() {
 					findEjsAndUpdateEjsAddressByTagPropertyObj(function() {
+console.log(ejsAddress);
 						checkEjsAddress(function() {
 							renderToPath(function() {
 
-								console.log(ejsAddress);
+								//console.log(ejsAddress);
 							});
 						});
 					});
@@ -78,6 +80,9 @@ function Ejs_pine () {
 		function getAvatar (callback) {
 			if (req.session.passport && req.session.passport.hasOwnProperty('user')) {
 				avatar.auth = 'auth';
+			}
+			if (req.session.passport && req.session.passport.hasOwnProperty('user') && JSON.parse(req.session.passport.user).pj) {
+				avatar.pj = 'pj';
 			}
 			callback();
 		}
@@ -92,8 +97,8 @@ function Ejs_pine () {
 					}
 				}
 			}
-// console.log('tagClassObj: ');
-// console.log(tagClassObj);	
+ // console.log('tagClassObj: ');
+ // console.log(tagClassObj);	
 // console.log('\n');
 			callback();
 		}
@@ -113,8 +118,8 @@ function Ejs_pine () {
 				}
 				tagPropertyArr.push(tempObj);
 			}
-// console.log('tagPropertyArr: ');
-// console.log(tagPropertyArr);	
+//console.log('tagPropertyArr: ');
+//console.log(tagPropertyArr);	
 // console.log('\n');
 			callback();
 		}
@@ -124,23 +129,22 @@ function Ejs_pine () {
 					if (tagPropertyArr[i].tag == ejsListArr[j].properties.tag) {
 						if (tagPropertyArr[i].path) {
 							if (tagPropertyArr[i].path == ejsListArr[j].properties.path) {
-								
-								for (var k = 0; k < tagPropertyArr[k].classes.length; k++) {
-									var classCount = 0;
+								var classCount = 0;
+								for (var k = 0; k < tagPropertyArr[i].classes.length; k++) {
 									if ((tagPropertyArr[i].classes[k] == ejsListArr[j].properties.classes[k]) || ('default' == ejsListArr[j].properties.classes[k])) {
 										classCount++;
-										if (classCount == tagPropertyArr[k].classes.length) {
+										if (classCount == tagPropertyArr[i].classes.length) {
 											ejsAddress[tagPropertyArr[i].tag] = ejsListArr[j].name;
 										}
 									}
 								}
 							}
 						} else {
-							for (var k = 0; k < tagPropertyArr[k].classes.length; k++) {
-								var classCount = 0;
+							var classCount = 0;
+							for (var k = 0; k < tagPropertyArr[i].classes.length; k++) {
 								if ((tagPropertyArr[i].classes[k] == ejsListArr[j].properties.classes[k]) || ('default' == ejsListArr[j].properties.classes[k])) {
 									classCount++;
-									if (classCount == tagPropertyArr[k].classes.length) {
+									if (classCount == tagPropertyArr[i].classes.length) {
 										ejsAddress[tagPropertyArr[i].tag] = ejsListArr[j].name;
 									}
 								}

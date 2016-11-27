@@ -11,7 +11,7 @@ function Post (mysqlConnection, upload, ejsPine) {
 
 	var express = require('express');
 	this.router = express.Router();
-
+/*
 	this.router.get('/writepost', function (req, res, next) {
 		ejsPine.findEjsAddress(req, res, 'writepost');
 	});
@@ -33,33 +33,28 @@ function Post (mysqlConnection, upload, ejsPine) {
 				res.redirect('/post/no/' + rows[rows.length-1]['no']);
 			});
 		});
-		/*
-		var query = 'INSERT INTO board (title, contents) VALUES (\'' + req.body.title +'\',\''+contents +'\')';;
-		mysqlConnection.query(query, function (err, rows, fields) {
-			if (err) {
-				throw err;
-				res.render('./layout', {ejsAddress: address['ejs']['/error']['auth'], hrefAddress: address['href'], errStr: err});
-			} else {
-				var query = 'SELECT * FROM board WHERE title=? AND contents=?';
-				mysqlConnection.query(query, [req.body.title, contents], function (err, rows, fields) {
-					res.redirect('/post/no/' + rows[0]['no']);
-				});
-			}
-		});
-		*/
+		
+		// var query = 'INSERT INTO board (title, contents) VALUES (\'' + req.body.title +'\',\''+contents +'\')';;
+		// mysqlConnection.query(query, function (err, rows, fields) {
+		// 	if (err) {
+		// 		throw err;
+		// 		res.render('./layout', {ejsAddress: address['ejs']['/error']['auth'], hrefAddress: address['href'], errStr: err});
+		// 	} else {
+		// 		var query = 'SELECT * FROM board WHERE title=? AND contents=?';
+		// 		mysqlConnection.query(query, [req.body.title, contents], function (err, rows, fields) {
+		// 			res.redirect('/post/no/' + rows[0]['no']);
+		// 		});
+		// 	}
+		// });
+		
 	});
-
+*/
 	this.router.get('/no/:no', function (req, res, next) {
 		var query = 'SELECT * FROM youtube WHERE no=?';
 		mysqlConnection.query(query, [req.params.no], function (err, rows, fields) {
-			var url = '';
-			if (rows[0]['url']) {
-				url = rows[0]['url'].replace('watch?v=', 'embed/');
-			}
-
 			var obj = {
 				classes: [],
-				contents: {title: rows[0]['title'], url: url}
+				contents: rows
 			}
 			ejsPine.findEjsAddress(req, res, 'postview', obj);
 		});
@@ -77,8 +72,8 @@ function Post (mysqlConnection, upload, ejsPine) {
 	});
 
 	this.router.get('/search', function (req, res, next) {
-		var query = 'SELECT * FROM youtube WHERE title=?';
-		mysqlConnection.query(query, [req.query.q], function (err, rows, fields) {
+		var query = 'SELECT * FROM youtube WHERE title_pineapple OR title_youtube LIKE ?';
+		mysqlConnection.query(query, ['%'+ req.query.q +'%'], function (err, rows, fields) {
 			if (rows.length) {
 				var obj = {
 					classes: [],

@@ -1,0 +1,17 @@
+<div id="top_nav">
+
+	<%- include('header#complement_auth') %>
+	
+	<div id="auth">
+		<div>Customer </div>
+		<div id="status">
+			<a href="<%- address.path.status %>">Status</a>
+		</div>
+		<div id="withdrawal">
+			<a href="<%- address.path.withdrawal %>">withdrawal</a>
+		</div>
+		<div id="logout">
+			<a href="<%- address.path.logout %>"><img src="<%- address.img.login_status %>"></a>
+		</div>
+	</div>
+</div>

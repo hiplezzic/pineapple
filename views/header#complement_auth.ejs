@@ -10,9 +10,11 @@
 	<a href="<%- address.path.home %>"><img src="<%- address.img.sajiyo %>"></a>
 </div>
 <div id="searchbar">
-	<form action="search" method="get">
-		<input id="searchbar" type="text" name="q">
-		<img id="search" src="<%- address.img.search %>">
+	<form action="/post/search" method="get">
+		<input id="searchbar_input" type="text" name="q">
+		<button id="searchbar_button">
+			<img id="searchbar_icon" src="<%- address.img.search %>">
+		</button>
 		<input class="hidden" type="submit">
 	</form>
 </div>

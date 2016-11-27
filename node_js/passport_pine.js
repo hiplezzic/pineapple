@@ -7,12 +7,13 @@ function Passport_pine (passport, googleAuthObj) {
 	var passport = passport;
 
 	this.serializeUser = function (mysqlConnection) {
-		passport.serializeUser(function(nickname, done) {
-			done(null, nickname);
+		passport.serializeUser(function(userJson, done) {
+			done(null, userJson);
 		});
 
-		passport.deserializeUser(function(nickname, done) {
+		passport.deserializeUser(function(userJson, done) {
 			var query = 'SELECT * FROM accounts WHERE nickname=?';
+			var nickname = JSON.parse(userJson).nickname;
 			mysqlConnection.query(query, [nickname], function (err, rows, fields) {
 				if (err) throw err;
 				if (!rows.length) {
@@ -63,18 +64,31 @@ function Passport_pine (passport, googleAuthObj) {
 			function(accessToken, refreshToken, params, profile, done) {
 				mysqlConnection.query('SELECT \'auth_id\' FROM accounts WHERE auth_id=\'google:'+ profile.id +'\'', function (err, rows, fields) {
 					if (err) throw err;
+					var userObj = {
+						nickname: '',
+						pj: 'customer'
+					}
 					if (!rows.length) {
-						var query = 'INSERT INTO accounts (auth_id, username, password, salt, nickname) VALUES ( ?, ?, ?, ?, ? )';
-						mysqlConnection.query(query, ['google:'+ profile.id, profile.id, 'password', 'salt', profile.id + profile.displayName], function (err, rows, fields) {
+						var query = 'INSERT INTO accounts (auth_id, username, password, salt, nickname, access_token) VALUES ( ?, ?, ?, ?, ?, ? )';
+						mysqlConnection.query(query, ['google:'+ profile.id, profile.id, 'password', 'salt', profile.id + profile.displayName, accessToken], function (err, rows, fields) {
 							if (err) throw err;
+							userObj.nickname = profile.id + profile.displayName;
+							done(null, JSON.stringify(userObj));
 						});
 					} else {
 						var query = 'UPDATE accounts SET access_token=? WHERE auth_id=?';
 						mysqlConnection.query(query, [accessToken, 'google:'+ profile.id], function (err, rows, fields) {
 							if (err) throw err;
+							var query = 'SELECT pj, nickname FROM accounts WHERE auth_id=?';
+							mysqlConnection.query(query, ['google:'+ profile.id], function (err, rows, fields) {
+								if (err) throw err;
+								userObj.nickname = rows[0].nickname;
+								userObj.pj = rows[0].pj;
+								done(null, JSON.stringify(userObj));
+							});
 						});
 					}
-					done(null, profile.id + profile.displayName);
+					
 				});
 			}
 		));

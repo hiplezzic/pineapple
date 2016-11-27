@@ -6,6 +6,7 @@ function Router () {
 
 	var Ejs_pine = require('../node_js/ejs_pine.js');
 	var ejsPine = new Ejs_pine;
+	var youtubePine = require('../node_js/youtube_pine.js');
 
 	this.route = function (app, mysqlConnection, hasher, upload, passport, LocalStrategy, GoogleStrategy, googleAuthInfo) {
 
@@ -13,7 +14,7 @@ function Router () {
 		var home = new Home(mysqlConnection, ejsPine);
 		var homeRouter = home.router;
 		var Auth = require('./auth');
-		var auth = new Auth(mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy, ejsPine, googleAuthInfo);
+		var auth = new Auth(mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy, ejsPine, youtubePine, googleAuthInfo);
 		var authRouter = auth.router;
 		var Post = require('./post');
 		var post = new Post(mysqlConnection, upload, ejsPine);
