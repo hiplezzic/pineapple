@@ -1,22 +1,12 @@
 <div id="top_nav">
-	<div id="menubar">
-		<img src="<%- address.img.menubar %>">
-	</div>
-	<div id="banner">
-		<a href="<%- address.path.home %>"><img src="<%- address.img.sajiyo %>"></a>
-	</div>
-	<div id="searchbar">
-		<form action="search" method="get">
-			<input id="searchbar" type="text" name="q">
-			<img id="search" src="<%- address.img.search %>">
-			<input class="hidden" type="submit">
-		</form>
-	</div>
+
+	<%- include('header#complement_auth') %>
+
 	<div id="auth">
-		<div>
+		<div id="login">
 			<a href="<%- address.path.login_local %>">login</a>
 		</div>
-		<div>
+		<div id="register">
 			<a href="<%- address.path.register %>">register</a>
 		</div>
 	</div>

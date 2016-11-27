@@ -10,7 +10,7 @@ function Home (mysqlConnection, ejsPine) {
 	this.router = express.Router();
 
 	this.router.get('', function(req, res){
-		var query = 'SELECT * FROM youtube';
+		var query = 'SELECT no, videoId, title_pineapple, title_youtube, thumbnails_medium_url FROM youtube';
 		mysqlConnection.query(query, function (err, rows, fields) {
 			var obj = {
 				classes: [],

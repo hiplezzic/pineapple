@@ -1,0 +1,18 @@
+<div id="menubar">
+	<button onclick="clickMenubar()" id="dropdownButton"><img src="<%- address.img.menubar %>"></button>
+	<div id="dropdown" class="dropdown_contents">
+		<a href="#">Link 1</a>
+		<a href="#">Link 2</a>
+		<a href="#">Link 3</a>
+	</div>
+</div>
+<div id="banner">
+	<a href="<%- address.path.home %>"><img src="<%- address.img.sajiyo %>"></a>
+</div>
+<div id="searchbar">
+	<form action="search" method="get">
+		<input id="searchbar" type="text" name="q">
+		<img id="search" src="<%- address.img.search %>">
+		<input class="hidden" type="submit">
+	</form>
+</div>
