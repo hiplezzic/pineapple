@@ -107,21 +107,47 @@ console.log('Start!');
 						youtubePine.getRefinedYoutubeObj(accessToken, 50, null, function (result) {
 							var query = 'SELECT * FROM youtube';
 							mysqlConnection.query(query, function (err, rows, fields) {
-								var flag = false;
 								for (var i = 0; i < result.length; i++) {
+									var flag = false;
 									for (var j = 0; j < rows.length; j++) {
 										if (result[i].id == rows[j].id) {
-											flag = true;
+											flag = true;	
 											if (result[i].etag !== rows[j].etag) {
-console.log('Found!');
-												var query = 'UPDATE youtube SET thumbnails_default_url=?, thumbnails_default_width=?, thumbnails_default_height=?, thumbnails_medium_url=?, thumbnails_medium_width=?, thumbnails_medium_height=?, thumbnails_high_url=?, thumbnails_high_width=?, thumbnails_high_height=?, thumbnails_standard_url=?, thumbnails_standard_width=?, thumbnails_standard_height=? WHERE id=?';
+console.log(result[i].etag +' '+ rows[j].etag);
+console.log('Found!');	
+												for (var k = 0; k < Object.keys(result[i]).length; k++) {
+													var key = Object.keys(result[i])[k];
+													// var query = 'UPDATE youtube SET ?=? WHERE ?=?';
+													// mysqlConnection.query(query, [key, result[i][key], 'id', result[i].id], function (err, rows, fields) {
+													// 	if(err) throw err;
+													// });	
+													mysqlPine.updateValues('youtube', [key], [result[i][key]], 'id=\''+ result[i].id +'\'', function () {
+
+													});
+												}
+												/*var query = 'UPDATE youtube SET thumbnails_default_url=?, thumbnails_default_width=?, thumbnails_default_height=?, thumbnails_medium_url=?, thumbnails_medium_width=?, thumbnails_medium_height=?, thumbnails_high_url=?, thumbnails_high_width=?, thumbnails_high_height=?, thumbnails_standard_url=?, thumbnails_standard_width=?, thumbnails_standard_height=? WHERE id=?';
 												mysqlConnection.query(query, [result[i].thumbnails_default_url, result[i].thumbnails_default_width, result[i].thumbnails_default_height, result[i].thumbnails_medium_url, result[i].thumbnails_medium_width, result[i].thumbnails_medium_height, result[i].thumbnails_high_url, result[i].thumbnails_high_width, result[i].thumbnails_high_height, result[i].thumbnails_standard_url, result[i].thumbnails_standard_width, result[i].thumbnails_standard_height, result[i].id], function (err, rows, fields) {
 
-												});
+												});*/
 											}
 										}
 									}
-								}/*
+									if (!flag) {
+										result[i]['nickname'] = nickname;
+										var columnArr = [];
+										var valueArr = [];
+										for (var k = 0; k < Object.keys(result[i]).length; k++) {
+											var key = Object.keys(result[i])[k];
+											columnArr.push(key);
+											valueArr.push(result[i][key]);
+										}
+										mysqlPine.insertValues('youtube', columnArr, valueArr, function () {
+
+										});
+									}
+								}
+
+								/*
 								if (!flag) {
 									var query = 'INSERT INTO youtube (etag, id, videoId, nickname, publishedAt, channelId, playlistId, title_youtube, description, channelTitle, privacyStatus, thumbnails_default_url, thumbnails_default_width, thumbnails_default_height, thumbnails_medium_url, thumbnails_medium_width, thumbnails_medium_height, thumbnails_high_url, thumbnails_high_width, thumbnails_high_height, thumbnails_standard_url, thumbnails_standard_width, thumbnails_standard_height) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
 									mysqlConnection.query(query, [result[i].etag, result[i].id, result[i].videoId, nickname, result[i].publishedAt, result[i].channelId, result[i].playlistId, result[i].title_youtube, result[i].description, result[i].channelTitle, result[i].privacyStatus, result[i].thumbnails_default_url, result[i].thumbnails_default_width, result[i].thumbnails_default_height, result[i].thumbnails_medium_url, result[i].thumbnails_medium_width, result[i].thumbnails_medium_height, result[i].thumbnails_high_url, result[i].thumbnails_high_width, result[i].thumbnails_high_height, result[i].thumbnails_standard_url, result[i].thumbnails_standard_width, result[i].thumbnails_standard_height], function (err, rows, fields) {

@@ -2,7 +2,7 @@
 // /public/js/script_motherboard.js
 //-------------------------
 
-function httpGetAsync(theUrl, callback) {
+function getHttpRequest(theUrl, callback) {
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() { 
 		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -14,10 +14,10 @@ function httpGetAsync(theUrl, callback) {
 var accessToken = document.cookie.split('=')[1];
 var getPlayListIdUrl = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true&access_token='+ accessToken;
 
-httpGetAsync(getPlayListIdUrl, function (result) {
+getHttpRequest(getPlayListIdUrl, function (result) {
 	var playListId = JSON.parse(result).items[0].contentDetails.relatedPlaylists.uploads;
 	var getVideoArrUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId='+ playListId +'&access_token='+ accessToken +'&maxResults=50';
-	httpGetAsync(getVideoArrUrl, function (result) {
+	getHttpRequest(getVideoArrUrl, function (result) {
 		//console.log(JSON.parse(result).items[0].contentDetails.videoId);
 		var videoArr = JSON.parse(result).items;
 		var startdiv = document.getElementById('javascript');
@@ -29,6 +29,5 @@ httpGetAsync(getPlayListIdUrl, function (result) {
 			tag.src = 'https://www.youtube.com/embed/'+ videoArr[i].contentDetails.videoId;
 			startdiv.appendChild(tag);
 		}
-
 	});
 });

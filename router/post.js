@@ -50,7 +50,7 @@ function Post (mysqlConnection, upload, ejsPine) {
 	});
 */
 	this.router.get('/no/:no', function (req, res, next) {
-		var query = 'SELECT * FROM youtube WHERE no=?';
+		var query = 'SELECT * FROM board WHERE no=?';
 		mysqlConnection.query(query, [req.params.no], function (err, rows, fields) {
 			var obj = {
 				classes: [],
@@ -61,7 +61,7 @@ function Post (mysqlConnection, upload, ejsPine) {
 	});
 
 	this.router.get('/archive', function (req, res, next) {
-		var query = 'SELECT * FROM youtube';
+		var query = 'SELECT * FROM board';
 		mysqlConnection.query(query, function (err, rows, fields) {
 			var obj = {
 				classes: [],
@@ -72,7 +72,7 @@ function Post (mysqlConnection, upload, ejsPine) {
 	});
 
 	this.router.get('/search', function (req, res, next) {
-		var query = 'SELECT * FROM youtube WHERE title_pineapple OR title_youtube LIKE ?';
+		var query = 'SELECT * FROM board WHERE title LIKE ?';
 		mysqlConnection.query(query, ['%'+ req.query.q +'%'], function (err, rows, fields) {
 			if (rows.length) {
 				var obj = {

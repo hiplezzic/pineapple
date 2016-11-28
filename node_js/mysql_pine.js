@@ -1,5 +1,5 @@
 //-------------------------------------
-// /node_js/mysql_pine.js 					폐기예정
+// /node_js/mysql_pine.js
 //-------------------------------------
 
 function Mysql_pine (mysqlConnection) {
@@ -18,11 +18,25 @@ function Mysql_pine (mysqlConnection) {
 				query += columnArr[i] + ') VALUES ' + questionMarkArrStr;
 			}
 		}
-
+console.log(query);
 		mysqlConnection.query(query, valueArr, function (err, rows, fields) {
-			if (err) {
-				res.send('Serverside Error has been occured!')
-			}
+			if (err) throw err;
+
+			callback();
+		});
+	}
+
+	this.updateValues = function (tableName, columnArr, valueArr, conditionStr, callback) {
+		var setArr = [];
+		var setStr = '';
+		var query = 'UPDATE ' + tableName + ' SET ';
+		for (var i = 0; i < columnArr.length; i++) {
+			setArr.push(columnArr[i] +'=?')
+		}
+		setStr = setArr.join(',');
+		query += setStr +' WHERE '+ conditionStr
+		mysqlConnection.query(query, valueArr, function (err, rows, fields) {
+			if (err) throw err;
 
 			callback();
 		});
