@@ -4,14 +4,17 @@
 	
 	<div id="auth">
 		<div>Customer </div>
-		<div id="status">
-			<a href="<%- address.path.status %>">Status</a>
-		</div>
-		<div id="withdrawal">
-			<a href="<%- address.path.withdrawal %>">withdrawal</a>
-		</div>
-		<div id="logout">
-			<a href="<%- address.path.logout %>"><img src="<%- address.img.login_status %>"></a>
-		</div>
+		<a id="logout" class="button_box" href="<%- address.path.logout %>">
+			Logout
+		</a>
+		<a id="upload" class="button_box" href="<%- address.path.upload_youtube %>">
+			Upload
+		</a>
+		<a id="status" class="button_box" href="<%- address.path.status %>">
+			Status
+		</a>
+		<a id="withdrawal" class="button_box" href="<%- address.path.withdrawal %>">
+			withdrawal
+		</a>
 	</div>
 </div>

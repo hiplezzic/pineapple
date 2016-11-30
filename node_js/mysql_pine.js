@@ -18,7 +18,6 @@ function Mysql_pine (mysqlConnection) {
 				query += columnArr[i] + ') VALUES ' + questionMarkArrStr;
 			}
 		}
-console.log(query);
 		mysqlConnection.query(query, valueArr, function (err, rows, fields) {
 			if (err) throw err;
 

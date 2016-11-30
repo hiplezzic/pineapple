@@ -62,34 +62,36 @@ function Passport_pine (passport, googleAuthObj) {
 				callbackURL: googleAuthObj.redirect_uris[0]
 			},
 			function(accessToken, refreshToken, params, profile, done) {
-				mysqlConnection.query('SELECT \'auth_id\' FROM accounts WHERE auth_id=\'google:'+ profile.id +'\'', function (err, rows, fields) {
-					if (err) throw err;
-					var userObj = {
-						nickname: '',
-						pj: 'customer'
-					}
-					if (!rows.length) {
-						var query = 'INSERT INTO accounts (auth_id, username, password, salt, nickname, access_token) VALUES ( ?, ?, ?, ?, ?, ? )';
-						mysqlConnection.query(query, ['google:'+ profile.id, profile.id, 'password', 'salt', profile.id + profile.displayName, accessToken], function (err, rows, fields) {
-							if (err) throw err;
-							userObj.nickname = profile.id + profile.displayName;
-							done(null, JSON.stringify(userObj));
-						});
-					} else {
-						var query = 'UPDATE accounts SET access_token=? WHERE auth_id=?';
-						mysqlConnection.query(query, [accessToken, 'google:'+ profile.id], function (err, rows, fields) {
-							if (err) throw err;
-							var query = 'SELECT pj, nickname FROM accounts WHERE auth_id=?';
-							mysqlConnection.query(query, ['google:'+ profile.id], function (err, rows, fields) {
-								if (err) throw err;
-								userObj.nickname = rows[0].nickname;
-								userObj.pj = rows[0].pj;
-								done(null, JSON.stringify(userObj));
-							});
-						});
-					}
-					
+				updateGoogleClientAccountInfo(function (result) {
+					done(null, result);
 				});
+
+				function updateGoogleClientAccountInfo (callback) {
+					mysqlConnection.query('SELECT pj, nickname FROM accounts WHERE auth_id=\'google:'+ profile.id +'\'', function (err, rowsPjNickname, fields) {
+						if (err) throw err;
+						var userObj = {
+							nickname: '',
+							pj: 'customer'
+						}
+						if (!rowsPjNickname.length) {
+							var query = 'INSERT INTO accounts (auth_id, username, password, salt, nickname, access_token) VALUES ( ?, ?, ?, ?, ?, ? )';
+							mysqlConnection.query(query, ['google:'+ profile.id, profile.id, 'password', 'salt', profile.id + profile.displayName, accessToken], function (err, rows, fields) {
+								if (err) throw err;
+								userObj.nickname = profile.id + profile.displayName;
+								callback(JSON.stringify(userObj));
+							});
+						} else {
+							var query = 'UPDATE accounts SET access_token=? WHERE auth_id=?';
+							mysqlConnection.query(query, [accessToken, 'google:'+ profile.id], function (err, rows, fields) {
+								if (err) throw err;
+								userObj.nickname = rowsPjNickname[0].nickname;
+								userObj.pj = rowsPjNickname[0].pj;
+								callback(JSON.stringify(userObj));
+							});
+						}
+					});
+				}
+				
 			}
 		));
 	};

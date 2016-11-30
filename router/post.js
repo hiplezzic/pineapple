@@ -52,6 +52,7 @@ function Post (mysqlConnection, upload, ejsPine) {
 	this.router.get('/no/:no', function (req, res, next) {
 		var query = 'SELECT * FROM board WHERE no=?';
 		mysqlConnection.query(query, [req.params.no], function (err, rows, fields) {
+			if (err) throw err;
 			var obj = {
 				classes: [],
 				contents: rows

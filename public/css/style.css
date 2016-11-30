@@ -1,6 +1,35 @@
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,700|PT+Serif");
+@keyframes turnColor {
+  from {
+    background: #f8f8f8;
+    color: #555; }
+  to {
+    background: #a8a8a8;
+    color: #000; } }
+@keyframes turnColor_upload {
+  from {
+    background: #555;
+    color: #fff;
+    border: solid #555 1px;
+    box-shadow: none; }
+  to {
+    background: #a8a8a8;
+    color: #000;
+    border: solid #a8a8a8 1px;
+    box-shadow: 0 0 2px 2px #a8a8a8; } }
+@keyframes hoverVideoThumbnailPlayButton {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes hoverVideoThumbnailContainer {
+  from {
+    border: none; }
+  to {
+    border: solid #a8a8a8 1px; } }
 body {
-  font-family: 'Nanum Gothic', serif;
+  font-family: 'PT Serif', serif;
   font-size: 14px;
   color: #555; }
 
@@ -8,13 +37,19 @@ a {
   text-decoration: none; }
 
 .hidden {
-  display: none; }
+  display: none !important; }
+
+.video_preview_iframe {
+  position: absolute;
+  top: 50px;
+  left: 50px; }
 
 #container {
-  width: 100%;
   position: absolute;
   top: 0;
-  left: 0; }
+  left: 0;
+  width: 100%;
+  height: 100%; }
 
 #header {
   width: 100%;
@@ -34,11 +69,13 @@ a {
     #top_nav #menubar button {
       border: none;
       background: none;
-      margin-top: 17.5px; }
+      padding: 0;
+      margin-top: 17.5px;
+      margin-left: 30px;
+      cursor: pointer; }
     #top_nav #menubar img {
       width: 15px;
-      height: 15px;
-      cursor: pointer; }
+      height: 15px; }
     #top_nav #menubar .dropdown_contents {
       display: none;
       position: absolute;
@@ -56,15 +93,24 @@ a {
   #top_nav #banner {
     width: 90px;
     height: 40px;
-    margin-top: 5px; }
+    margin-top: 5px;
+    margin-left: 30px; }
+    #top_nav #banner a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 25px;
+      font-weight: 700;
+      color: #555; }
     #top_nav #banner img {
       width: 90px;
       height: 40px; }
   #top_nav #searchbar {
-    width: 50%;
-    margin-top: 11.5px; }
+    width: 30%;
+    margin-top: 11.5px;
+    margin-left: 30px; }
+    #top_nav #searchbar form {
+      height: 25px; }
     #top_nav #searchbar input {
-      width: 80%;
+      width: 70%;
       height: 25px;
       float: left;
       padding: 0;
@@ -72,52 +118,83 @@ a {
     #top_nav #searchbar button {
       border: none;
       background: none;
-      padding: 0; }
+      padding: 0;
+      cursor: pointer; }
     #top_nav #searchbar img {
-      width: 15.5px;
-      height: 15.5px;
+      width: 14px;
+      height: 14px;
       float: left;
-      padding: 5.8px 18px 5.8px 18px;
+      padding: 5.5px 14px;
       margin-left: 1px;
-      border: solid #a8a8a8 1.8px;
-      border-radius: 10%;
+      border: solid #a8a8a8 1px;
+      border-radius: 2px;
       background: #f8f8f8; }
-  #top_nav #auth {
+  #top_nav #favorite_pj {
+    margin-top: 8.5px; }
+    #top_nav #favorite_pj .pj {
+      font-size: 12px;
+      color: #fff;
+      padding: 6px 0;
+      margin-left: 10px;
+      border: solid #a8a8a8 1px;
+      border-radius: 10px;
+      background: #a8a8a8; }
+    #top_nav #favorite_pj .name {
+      margin-left: 10px; }
+    #top_nav #favorite_pj .new_video_counts {
+      margin-left: 5px;
+      margin-right: 10px; }
+  #top_nav .button_box {
+    display: block;
     float: right;
-    margin-top: 8px;
+    padding: 6px 6px;
+    margin-right: 10px;
+    border-radius: 3px;
+    background: #f8f8f8;
+    border: solid #a8a8a8 1px;
+    color: #555;
+    cursor: pointer; }
+    #top_nav .button_box:hover {
+      animation-name: turnColor;
+      animation-duration: 0.3s;
+      background: #a8a8a8;
+      color: #000; }
+  #top_nav #auth {
+    font-size: 12px;
+    float: right;
+    margin-top: 10.5px;
     margin-right: 5px; }
     #top_nav #auth img {
       width: 27px;
       height: 27px;
       padding: 11px 20px 0 0; }
-    #top_nav #auth #login {
-      display: block;
-      float: right;
-      padding: 8px 15px;
-      margin-right: 10px;
-      background: #f8f8f8;
-      border: solid #a8a8a8 1px;
-      border-radius: 4px; }
     #top_nav #auth #register {
-      display: block;
-      float: right;
-      padding: 8px 15px;
-      margin-right: 10px;
-      background: #00a1ff;
-      border: solid #00619a 1px;
-      border-radius: 4px;
+      background: #555;
+      border: solid #555 1px;
       color: #fff; }
-  #top_nav #upload {
-    width: 27px;
-    height: 27px;
-    padding: 11px 30px 0 0; }
-    #top_nav #upload img {
-      width: 27px;
-      height: 27px;
-      padding: 0; }
-  #top_nav #withdrawal {
-    display: none; }
+    #top_nav #auth #upload {
+      background: #555;
+      border: solid #555 1px;
+      color: #fff; }
+      #top_nav #auth #upload:hover {
+        animation-name: turnColor_upload;
+        animation-duration: 0.3s;
+        background: #a8a8a8;
+        color: #000;
+        border: solid #a8a8a8 1px;
+        box-shadow: 0 0 2px 2px #a8a8a8; }
+    #top_nav #auth #withdrawal {
+      display: none; }
+  #top_nav #user_box {
+    float: right;
+    clear: both;
+    width: 100px;
+    height: 100px;
+    border: solid #a8a8a8 1px;
+    border-radius: 4px;
+    background: #fff; }
 
+/* 
 #sidebar {
   width: 200px;
   height: 100%;
@@ -125,26 +202,138 @@ a {
   float: left;
   position: fixed;
   border-right: solid #d8d8d8 1px;
-  z-index: 1; }
-  #sidebar .subject {
+  z-index: 1;
+  .subject {
     width: 150px;
     height: 28px;
     clear: both;
     margin: 0 25px 0 25px;
-    background: #ff8800; }
-    #sidebar .subject img {
+    background: #ff8800;
+    img {
       width: 16px;
       height: 16px;
       float: left;
-      padding: 5px; }
-    #sidebar .subject a {
+      padding: 5px;
+    }
+    a {
       float: left;
       padding: 5px;
-      color: #fff; }
-
+      color: #fff;
+    }
+  }
+}
+ */
 #section {
-  padding: 15px;
-  margin: 50px 0 0 200px; }
+  width: 100%;
+  min-height: 100%; }
+  #section #header_handler {
+    height: 50px; }
+  #section #section_content_container {
+    padding-bottom: 50px; }
+  #section #upload_container {
+    width: 900px;
+    height: 600px;
+    padding: 15px;
+    border: solid #a8a8a8 1px;
+    margin: 0 auto; }
+    #section #upload_container #upload_ready {
+      width: 190px;
+      height: 20px;
+      padding: 10px;
+      border: dotted #a8a8a8 1px;
+      margin-top: 279px;
+      margin-left: 344px;
+      text-align: center;
+      vertical-align: middle; }
+    #section #upload_container #upload_left_side {
+      width: 420px;
+      height: 570px;
+      float: left;
+      padding: 15px;
+      border: dotted #a8a8a8 1px; }
+      #section #upload_container #upload_left_side #upload_proccess {
+        width: upload_proccess_width;
+        height: upload_proccess_height;
+        font-size: 150px;
+        margin-top: 85px;
+        margin-left: 110px; }
+    #section #upload_container #upload_right_side {
+      width: 400px;
+      height: 570px;
+      float: right;
+      padding: 15px;
+      border: dotted #a8a8a8 1px; }
+      #section #upload_container #upload_right_side .label {
+        font-weight: 700; }
+  #section #motherboard_container {
+    width: 900px;
+    height: 100%;
+    padding: 15px;
+    border: solid #a8a8a8 1px;
+    margin: 15px 0; }
+    #section #motherboard_container #motherboard_top {
+      padding: 15px;
+      border: solid #a8a8a8 1px;
+      margin-bottom: 15px; }
+    #section #motherboard_container #motherboard_left_side {
+      float: left;
+      width: 350px;
+      height: 100%;
+      padding: 15px;
+      border: solid #a8a8a8 1px;
+      margin-right: 15px; }
+    #section #motherboard_container #motherboard_middle_side {
+      float: left;
+      width: 50px;
+      height: 100%;
+      padding: 15px;
+      border: dotted #a8a8a8 1px;
+      margin-right: 15px; }
+      #section #motherboard_container #motherboard_middle_side #upload_button {
+        width: 50px;
+        height: 50px;
+        border: dotted #a8a8a8 1px; }
+      #section #motherboard_container #motherboard_middle_side #unupload_button {
+        width: 50px;
+        height: 50px;
+        border: dotted #a8a8a8 1px; }
+    #section #motherboard_container #motherboard_right_side {
+      float: left;
+      width: 350px;
+      height: 100%;
+      padding: 15px;
+      border: solid #a8a8a8 1px;
+      margin-right: 15px;
+      overflow: scroll; }
+    #section #motherboard_container .video_thumbnails_container {
+      width: 333px;
+      height: 100px;
+      clear: both; }
+      #section #motherboard_container .video_thumbnails_container:hover {
+        animation-name: hoverVideoThumbnailContainer;
+        animation-duration: 0.3s;
+        border: solid #a8a8a8 1px;
+        cursor: pointer; }
+    #section #motherboard_container .video_thumbnails_img_container {
+      display: block;
+      float: left;
+      margin: 5px; }
+    #section #motherboard_container .video_thumbnails_properties {
+      float: left; }
+    #section #motherboard_container .video_thumbnails_img {
+      float: left; }
+      #section #motherboard_container .video_thumbnails_img:hover {
+        cursor: pointer; }
+    #section #motherboard_container .video_thumbnails_play_button {
+      width: 50px;
+      padding: 27.55px 35px;
+      margin-left: -119px;
+      opacity: 0; }
+      #section #motherboard_container .video_thumbnails_play_button:hover {
+        animation-name: hoverVideoThumbnailPlayButton;
+        animation-duration: 0.3s;
+        opacity: 1;
+        cursor: pointer; }
   #section #streaming {
     background: gray; }
     #section #streaming #streaming-iframe {
@@ -152,7 +341,6 @@ a {
       margin: 0 auto; }
   #section #sumnail_bundle {
     width: 1000px;
-    height: 1000px;
     margin: 0 auto;
     border: solid #d8d8d8 1px; }
     #section #sumnail_bundle .row {
@@ -161,14 +349,13 @@ a {
       float: left;
       margin: 20px 10px; }
     #section #sumnail_bundle .column img {
-      width: 100px;
-      height: 100px; }
+      width: 200px; }
 
 #footer {
   height: 50px;
-  margin-left: 200px;
   clear: both;
-  border-top: solid #d8d8d8 1px; }
+  border-top: solid #d8d8d8 1px;
+  margin-top: -51px; }
 
 @media screen and (max-width: 450px) {
   #sidebar {

@@ -97,72 +97,7 @@ function Auth (mysqlConnection, hasher, passport, LocalStrategy, GoogleStrategy,
 			{ failureRedirect: 'http://localhost:81/auth/login' }
 		),
 		function(req, res) {
-			var query = 'SELECT access_token FROM accounts WHERE nickname=?';
-			var nickname = JSON.parse(req.session.passport.user).nickname;
-			mysqlConnection.query(query, [nickname], function (err, rows, fields) {
-				var accessToken = rows[0].access_token;
-				if (rows.length) {
-					if (JSON.parse(req.session.passport.user).pj) {
-console.log('Start!');
-						youtubePine.getRefinedYoutubeObj(accessToken, 50, null, function (result) {
-							var query = 'SELECT * FROM youtube';
-							mysqlConnection.query(query, function (err, rows, fields) {
-								for (var i = 0; i < result.length; i++) {
-									var flag = false;
-									for (var j = 0; j < rows.length; j++) {
-										if (result[i].id == rows[j].id) {
-											flag = true;	
-											if (result[i].etag !== rows[j].etag) {
-console.log(result[i].etag +' '+ rows[j].etag);
-console.log('Found!');	
-												for (var k = 0; k < Object.keys(result[i]).length; k++) {
-													var key = Object.keys(result[i])[k];
-													// var query = 'UPDATE youtube SET ?=? WHERE ?=?';
-													// mysqlConnection.query(query, [key, result[i][key], 'id', result[i].id], function (err, rows, fields) {
-													// 	if(err) throw err;
-													// });	
-													mysqlPine.updateValues('youtube', [key], [result[i][key]], 'id=\''+ result[i].id +'\'', function () {
-
-													});
-												}
-												/*var query = 'UPDATE youtube SET thumbnails_default_url=?, thumbnails_default_width=?, thumbnails_default_height=?, thumbnails_medium_url=?, thumbnails_medium_width=?, thumbnails_medium_height=?, thumbnails_high_url=?, thumbnails_high_width=?, thumbnails_high_height=?, thumbnails_standard_url=?, thumbnails_standard_width=?, thumbnails_standard_height=? WHERE id=?';
-												mysqlConnection.query(query, [result[i].thumbnails_default_url, result[i].thumbnails_default_width, result[i].thumbnails_default_height, result[i].thumbnails_medium_url, result[i].thumbnails_medium_width, result[i].thumbnails_medium_height, result[i].thumbnails_high_url, result[i].thumbnails_high_width, result[i].thumbnails_high_height, result[i].thumbnails_standard_url, result[i].thumbnails_standard_width, result[i].thumbnails_standard_height, result[i].id], function (err, rows, fields) {
-
-												});*/
-											}
-										}
-									}
-									if (!flag) {
-										result[i]['nickname'] = nickname;
-										var columnArr = [];
-										var valueArr = [];
-										for (var k = 0; k < Object.keys(result[i]).length; k++) {
-											var key = Object.keys(result[i])[k];
-											columnArr.push(key);
-											valueArr.push(result[i][key]);
-										}
-										mysqlPine.insertValues('youtube', columnArr, valueArr, function () {
-
-										});
-									}
-								}
-
-								/*
-								if (!flag) {
-									var query = 'INSERT INTO youtube (etag, id, videoId, nickname, publishedAt, channelId, playlistId, title_youtube, description, channelTitle, privacyStatus, thumbnails_default_url, thumbnails_default_width, thumbnails_default_height, thumbnails_medium_url, thumbnails_medium_width, thumbnails_medium_height, thumbnails_high_url, thumbnails_high_width, thumbnails_high_height, thumbnails_standard_url, thumbnails_standard_width, thumbnails_standard_height) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-									mysqlConnection.query(query, [result[i].etag, result[i].id, result[i].videoId, nickname, result[i].publishedAt, result[i].channelId, result[i].playlistId, result[i].title_youtube, result[i].description, result[i].channelTitle, result[i].privacyStatus, result[i].thumbnails_default_url, result[i].thumbnails_default_width, result[i].thumbnails_default_height, result[i].thumbnails_medium_url, result[i].thumbnails_medium_width, result[i].thumbnails_medium_height, result[i].thumbnails_high_url, result[i].thumbnails_high_width, result[i].thumbnails_high_height, result[i].thumbnails_standard_url, result[i].thumbnails_standard_width, result[i].thumbnails_standard_height], function (err, rows, fields) {
-
-									});
-								}*/
-							});
-						});
-						res.cookie('access_token', accessToken);
-						res.redirect('http://localhost:81');
-					}
-				} else {
-					res.redirect('http://localhost:81');
-				}
-			});
+			res.redirect('http://localhost:81');		
 		}
 	);
 
@@ -217,7 +152,154 @@ console.log('Found!');
 	});
 
 	this.router.get('/motherboard', function (req, res, next) {
-		ejsPine.findEjsAddress(req, res, 'motherboard');
+		var pj = JSON.parse(req.session.passport.user).pj;
+		var nickname = JSON.parse(req.session.passport.user).nickname;
+		if (pj) {
+			setAccesstokenCookie(nickname, function (nickname, accessToken) {
+				updatePjClientYoutubeInfo(nickname, accessToken, function () {
+
+				});
+			});
+
+			function setAccesstokenCookie (nickname, callback) {
+				var query = 'SELECT b.*, a.access_token FROM board AS b LEFT JOIN accounts AS a ON b.nickname = a.nickname WHERE b.nickname=?';
+				mysqlConnection.query(query, [nickname], function (err, rows, fields) {
+					if (err) throw err;
+					var accessToken = rows[0].access_token;
+					res.cookie('access_token', accessToken);
+					var obj = {
+						classes: ['pj'],
+						contents: rows
+					};
+					ejsPine.findEjsAddress(req, res, 'motherboard', obj);
+					callback(nickname, accessToken);
+
+				});
+			}
+
+			function updatePjClientYoutubeInfo (nickname, accessToken, callback) {
+
+				// id는 같되, etag 다른 자료 추출
+				// 다른 자료 update
+				// 그중 pj=true인 것들 board 값 update
+				var pj = JSON.parse(req.session.passport.user).pj;
+				if (pj) {
+//console.log('Start!');
+					youtubePine.getRefinedYoutubeObj(accessToken, 50, null, function (result) {
+						var query = 'SELECT * FROM youtube WHERE nickname=?';
+						mysqlConnection.query(query, [nickname], function (err, mysqlResultYoutube, fields) {
+console.log(mysqlResultYoutube.length);
+							if (err) throw err;
+							for (var i = result.length - 1; i >= 0; i--) {
+								var resultObj = result[i];
+console.log('rslt: '+ i + ' ' + resultObj.title_youtube);
+								var flag = false;
+								for (var j = mysqlResultYoutube.length - 1; j >= 0; j--) {
+									var mysqlResultYoutubeObj = mysqlResultYoutube[j];
+console.log('rows: '+ j + ' ' + mysqlResultYoutube.length);
+									if (resultObj.id == mysqlResultYoutubeObj.id) {
+										flag = true;
+										if (resultObj.etag !== mysqlResultYoutubeObj.etag) {
+console.log(j +'_ find******')
+console.log(resultObj.title_youtube+'/  /'+resultObj.etag)
+											// update해야할 항목 발견시
+											// update해야할 항목만 추출
+											var tempKeyArr = [];
+											var tempValueArr = [];
+											for (var k = 0; k < Object.keys(resultObj).length; k++) {
+												var resultObjKey = Object.keys(resultObj)[k];
+												if (String(resultObj[resultObjKey]) !== String(mysqlResultYoutubeObj[resultObjKey])) {
+													tempKeyArr.push(resultObjKey);
+													tempValueArr.push(resultObj[resultObjKey]);
+												}
+											}
+											mysqlPine.updateValues('youtube', tempKeyArr, tempValueArr, 'id=\''+ resultObj.id +'\'', function () {
+											});
+											if (mysqlResultYoutubeObj.uploaded) {
+												var tempBoardKeyArr = [];
+												var tempBoardValueArr = [];
+												var boardKeys = [
+													'title_youtube', 
+													'description_youtube', 
+													'privacyStatus_youtube', 
+													'thumbnails_standard_url',
+													'thumbnails_default_url',
+													'thumbnails_medium_url',
+													'thumbnails_high_url'
+												];
+												for (var k = 0; k < boardKeys.length; k++) {
+													if (boardKeys[k].split('_youtube').length > 1) {
+														var boardKey = boardKeys[k].split('_youtube')[0];
+														if ((tempKeyArr.indexOf(boardKeys[k]) !== -1) && !mysqlResultYoutubeObj[boardKey +'_pineapple']) {
+															tempBoardKeyArr.push(boardKey);
+															tempBoardValueArr.push(tempValueArr[tempKeyArr.indexOf(boardKeys[k])]);
+														}
+													} else {
+														var boardKey = boardKeys[k];
+														if (tempKeyArr.indexOf(boardKeys[k]) !== -1) {
+															tempBoardKeyArr.push(boardKey);
+															tempBoardValueArr.push(tempValueArr[tempKeyArr.indexOf(boardKeys[k])]);
+														}
+													}
+												}
+												(function (j) {
+													mysqlResultYoutube.splice(j, 1);
+													mysqlPine.updateValues('board', tempBoardKeyArr, tempBoardValueArr, 'id=\''+ resultObj.id +'\'', function () {
+													});
+												})(j)
+											} else {
+												mysqlResultYoutube.splice(j, 1);
+											}
+											break;
+										} else if (resultObj.etag == mysqlResultYoutubeObj.etag) {
+											mysqlResultYoutube.splice(j, 1);
+										}
+									}
+								}
+								if (!flag) {
+									// insert해야할 항목 발견시
+									resultObj['nickname'] = nickname;
+									var columnArr = [];
+									var valueArr = [];
+									for (var k = 0; k < Object.keys(resultObj).length; k++) {
+										var key = Object.keys(resultObj)[k];
+										columnArr.push(key);
+										valueArr.push(resultObj[key]);
+									}
+									(function (j) {
+										mysqlPine.insertValues('youtube', columnArr, valueArr, function () {
+console.log('INSERT changes');
+										});
+									})(j)
+								}
+							}
+							if (mysqlResultYoutube.length) {
+								// delete해야할 항목 발견시
+								var query = 'DELETE FROM youtube WHERE id=?';
+								for (var i = 0; i < mysqlResultYoutube.length; i++) {
+									(function (i) {
+console.log(mysqlResultYoutube[i]);
+										mysqlConnection.query(query, [mysqlResultYoutube[i].id], function (err, rows, field) {
+											if (err) throw err;
+console.log(i);
+											if (mysqlResultYoutube[i].uploaded) {
+												var queryBoard = 'DELETE FROM board WHERE id=?';
+												mysqlConnection.query(queryBoard, [mysqlResultYoutube[i].id], function (err, rows, fields) {
+												});
+											}
+console.log('DELETE changes');
+										});
+									})(i)
+								}
+							}
+						});
+					});
+				}
+			}
+		}
+
+
+
 	});
 }
 

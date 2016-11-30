@@ -1,34 +1,46 @@
-<div>유투브 업로드</div>
-<br>
-<div>
-<script type="text/javascript" src="/js/script_upload.js"></script>
-	<!-- <form method="post" enctype="multipart/form-data" onform="UploadVideo.handleUploadClicked()"> -->
-		<div>
-			<div>제목</div>
-			<input type="text" name="title">
+<div id="upload_container" class="drop_spot">
+	<div id="upload_ready" class="drop_spot">
+		Drag & Drop for Upload File
+	</div>
+	<div id="upload_left_side" class="hidden">
+		<div id="upload_videoplayer_container">
+			<video id="upload_videoplayer" width="400" controls autoplay><source type="video/avi"></video>
 		</div>
+		<div id="upload_proccess">
+			0%
+		</div>
+	</div>
+	<div id="upload_right_side" class="hidden">
+		<div class="label">Youtube Upload</div>
 		<br>
 		<div>
-			<div>동영상 파일</div>
-			<input type="file" name="file">
+		<script type="text/javascript" src="/js/script_upload.js"></script>
+			<!-- <form method="post" enctype="multipart/form-data" onform="UploadVideo.handleUploadClicked()"> -->
+				<div>
+					<div class="label">Title</div>
+					<input type="text" name="title">
+				</div>
+				<br>
+				<div>
+					<div class="label">Description</div>
+					<textarea name="description"></textarea>
+				</div>
+				<br>
+				<div>
+					<div class="label">Privacy Status</div>
+					Public<input type="radio" name="privacyStatus" value="public">
+					Unlisted<input type="radio" name="privacyStatus" value="unlisted">
+					Private<input type="radio" name="privacyStatus" value="private">
+				</div>
+				<br><br>
+				<div>
+					<!-- <input type="submit"> -->
+					<button onclick="UploadVideo.prototype.handleUploadClicked()">Upload</button>
+				</div>
+			<!-- </form> -->
 		</div>
-		<br>
-		<div>
-			<div>설명</div>
-			<textarea name="description"></textarea>
-		</div>
-		<br>
-		<div>
-			<div>Privacy Status</div>
-			Public<input type="radio" name="privacyStatus" value="public">
-			Unlisted<input type="radio" name="privacyStatus" value="unlisted">
-			Private<input type="radio" name="privacyStatus" value="private">
-		</div>
-		<br><br>
-		<div>
-			<!-- <input type="submit"> -->
-			<button onclick="UploadVideo.prototype.handleUploadClicked()">Upload</button>
-		</div>
-	<!-- </form> -->
+	</div>	
 </div>
+
 <script type="text/javascript" src="/js/script_upload.js"></script>
+<script type="text/javascript" src="/js/script_upload_drag.js"></script>

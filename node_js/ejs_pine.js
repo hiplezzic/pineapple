@@ -48,14 +48,14 @@ function Ejs_pine () {
 		}
 		var tagClassObj = {
 			header: 	['auth', 'pj'],
-			sidebar: 	['auth'],
+			//sidebar: 	['auth'],
 			section: 	['auth'],
 			footer: 	['auth']
 		}
 		var tagPropertyArr = [];
 		var ejsAddress = {
 			header: null,
-			sidebar: null,
+			//sidebar: null,
 			section: null,
 			footer: null
 		}

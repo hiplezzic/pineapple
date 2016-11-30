@@ -1,18 +1,12 @@
 var accessToken = document.cookie.split('=')[1];
 
 var UploadVideo = function () {
-	// this.tags = ['youtube-cors-upload'];
-	// this.categoryId = 22;
 	this.videoId = '';
 	this.uploadStartTime = 0;
-	// this.accessToken = accessToken;
 	this.authenticated = true;
-	//$('#button').on("click", this.handleUploadClicked.bind(this));
 }
 
 UploadVideo.prototype.handleUploadClicked = function() {
-  //$('#button').attr('disabled', true);
-  //this.uploadFile($('#file').get(0).files[0]);
 	var optionsObj = {
 		metadata: {
 			snippet: {},

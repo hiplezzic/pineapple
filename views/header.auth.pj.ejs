@@ -1,23 +1,43 @@
 <div id="top_nav">
 
 	<%- include('header#complement_auth') %>
+
+	<div id="favorite_pj">
+		<div class="pj">
+			<div class="name">PJ-1</div>
+			<div class="new_video_counts">10</div>
+		</div>
+		<div class="pj">
+			<div class="name">PJ-2</div>
+			<div class="new_video_counts">10</div>
+		</div>
+		<div class="pj">
+			<div class="name">PJ-3</div>
+			<div class="new_video_counts">10</div>
+		</div>
+	</div>
 	
 	<div id="auth">
 		<div>PJ </div>
-		<div id="motherboard">
-			<a href="<%- address.path.motherboard %>">Motherboard</a>
+		<div id="user_gate" class="button_box">
+			User
 		</div>
-		<div id="status">
-			<a href="<%- address.path.status %>">Status</a>
-		</div>
-		<div id="upload">
-			<a href="<%- address.path.logout %>"><img src="<%- address.img.upload %>"></a>
-		</div>
-		<div id="withdrawal">
-			<a href="<%- address.path.withdrawal %>">withdrawal</a>
-		</div>
-		<div id="logout">
-			<a href="<%- address.path.logout %>"><img src="<%- address.img.login_status %>"></a>
-		</div>
+		<a id="upload" class="button_box" href="<%- address.path.upload_youtube %>">
+			Upload
+		</a>
+		<a id="motherboard" class="button_box" href="<%- address.path.motherboard %>">
+			Motherboard
+		</a>
+		<a id="withdrawal" class="button_box" href="<%- address.path.withdrawal %>">
+			withdrawal
+		</a>
+	</div>
+	<div id="user_box" class="hidden">
+		<a id="status" class="button_box" href="<%- address.path.status %>">
+			Status
+		</a>
+		<a id="logout" class="button_box" href="<%- address.path.logout %>">
+			Logout
+		</a>
 	</div>
 </div>

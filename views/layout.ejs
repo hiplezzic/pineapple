@@ -6,17 +6,19 @@
 		<title>Pineapple</title>
 		<link rel="stylesheet" type="text/css" href="/css/style.css">
 		<script type="text/javascript" src="/js/script.js"></script>
+		<!-- <script type="text/javascript" src="/js/script_css.js"></script> -->
+		<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script> -->
 	</head>
 	<body>
 		<div id="container">
 			<div id="header">
 				<%- include(ejsAddress.header) %>
 			</div>
-			<div id="sidebar">
-				<%- include(ejsAddress.sidebar) %>
-			</div>
 			<div id="section">
-				<%- include(ejsAddress.section) %>
+				<div id="header_handler"></div>
+				<div id="section_content_container">
+					<%- include(ejsAddress.section) %>
+				</div>
 			</div>
 			<div id="footer">
 				<%- include(ejsAddress.footer) %>

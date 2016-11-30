@@ -1,4 +1,33 @@
+<div id="motherboard_container">
+	<div id="motherboard_top">
+		Motherboard
+	</div>
+	<div id="motherboard_left_side">
+		<% for (var i = 0; i < obj.length; i++) {%>
+			<div class="video_thumbnails_container">
+				<div id="<%- obj[i].videoId %>" class="video_thumbnails_img_container">
+					<img src="<%- obj[i].thumbnails_default_url %>" class="video_thumbnails_img">
+					<img src="/img/youtube_play_button.png" class="video_thumbnails_play_button">
+				</div>
+				<div class="video_thumbnails_properties">
+					Title: <%- obj[i].title %>
+				</div>
+			</div>
+		<% } %>
+	</div>
+	<div id="motherboard_middle_side">
+		<div id="upload_button">
+			Upload
+		</div>
+		<div id="unupload_button">
+			Unupload
+		</div>
+	</div>
+	<div id="motherboard_right_side">
+		<div id="javascript">
+			
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript" src="/js/script_motherboard.js"></script>
-<div>Motherboard</div>
-<br>
-<div id="javascript"></div>

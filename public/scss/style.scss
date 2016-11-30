@@ -1,8 +1,115 @@
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+@import url('https://fonts.googleapis.com/css?family=Oswald:400,700|PT+Serif');
 
 $font_size: 14px;
+$sub_font_size: 12px;
+$padding_default: 15px;
+$border_default: solid #a8a8a8 1px;
+$margin_default: 15px;
+
+$header_height: 50px;
+  $menubar_width: 15px;
+  $menubar_height: 15px;
+  $menubar_margin_left: 30px;
+  $banner_height: 40px;
+  $banner_margin_left: 30px;
+  $searchbar_height: 25px;
+  $searchbar_margin_left: 30px;
+  $searchbar_border_px: 1px;
+  $searchbar_icon_height: 14px;
+  $favorite_pj_height: 19px;
+  $favorite_pj_vertical_padding: 12px;
+  $auth_height: 15px;
+  $auth_vertical_padding: 12px;
+  $auth_horizon_padding: 12px;
+  $auth_border_radius: 3px;
+
+  $conatiner_width_default: 900px;
+  $container_height_default: 600px;
+    $upload_container_width: $conatiner_width_default;
+    $upload_container_height: $container_height_default;
+    $upload_ready_width: 190px;
+    $upload_ready_height: 20px;
+    $upload_ready_padding: 10px;
+    $upload_left_side_width: 420px;
+    $upload_left_side_height: 570px;
+    $upload_proccess_width: 200px;
+    $upload_proccess_height: 200px;
+    $motherboard_left_side_width: 350px;
+    $motherboard_left_side_height: 100%;
+    $motherboard_middle_side_width: 50px;
+    $motherboard_right_side_width: 350px;
+  
+$footer_height: 50px;
+$footer_border_px: 1px;
+
+@keyframes turnColor {
+  from {
+    background: #f8f8f8;
+    color: #555;
+  }
+  to {
+    background: #a8a8a8;
+    color: #000;
+  }
+}
+@keyframes turnColor_upload {
+  from {
+    background: #555;
+    color: #fff;
+    border: solid #555 1px;
+    box-shadow: none;
+  };
+  to { 
+    background: #a8a8a8;
+    color: #000;
+    border: solid #a8a8a8 1px;
+    box-shadow: 0 0 2px 2px #a8a8a8;
+  };
+}
+@keyframes hoverVideoThumbnailPlayButton {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes hoverVideoThumbnailContainer {
+  from { border: none; }
+  to { border: $border_default; }
+}
+
+@mixin section_content_container {
+  padding-bottom: $footer_height;
+}
+@mixin button_box {
+  display: block;
+  float: right;
+  padding: $auth_vertical_padding / 2 $auth_horizon_padding / 2;
+  margin-right: 10px;
+  border-radius: $auth_border_radius;
+  background: #f8f8f8;
+  border: solid #a8a8a8 1px;
+  color: #555;
+  cursor: pointer;
+  &:hover {
+    animation-name: turnColor;
+    animation-duration: 0.3s;
+    background: #a8a8a8;
+    color: #000;
+  }
+}
+
+      
+        
+@function calculateTopMarginForVerticalMiddleAlign ($container_height, $tag_height, $tag_vertical_padding, $tag_border) {
+  $tag_top_margin : ($container_height - $tag_height - $tag_vertical_padding - $tag_border * 2) / 2;
+  @return $tag_top_margin;
+}
+@function calculateLeftMarginForHorizontalMiddleAlign ($container_width, $tag_width, $tag_horizontal_padding, $tag_border) {
+  $tag_top_margin : ($container_width - $tag_width - $tag_horizontal_padding - $tag_border * 2) / 2;
+  @return $tag_top_margin;
+}
+
 body {
-  font-family: 'Nanum Gothic', serif;
+  font-family: 'PT Serif', serif;//'Nanum Gothic', serif;
   font-size: $font_size;
   color: #555;
 }
@@ -12,27 +119,23 @@ a {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.video_preview_iframe {
+  position: absolute;
+  top: 50px;
+  left: 50px;
 }
 
 #container {
-  width: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-$header_height: 50px;
-$menubar_height: 15px;
-$banner_height: 40px;
-
-$login_height: 15px;
-$register_height: 15px;
-@function calculateHeaderTagTopMargin ($header_height, $tag_height, $tag_horizon_padding, $tag_border) {
-  $tag_top_margin : 0;
-  $tag_top_margin : ($header_height - $tag_height - $tag_horizon_padding - $tag_border * 2) / 2;
-  @return $tag_top_margin;
-}
 #header {
   width: 100%;
   height: $header_height;
@@ -53,12 +156,14 @@ $register_height: 15px;
     button {
       border: none;
       background: none;
-      margin-top: calculateHeaderTagTopMargin($header_height, $menubar_height, 0, 0);
+      padding: 0;
+      margin-top: calculateTopMarginForVerticalMiddleAlign($header_height, $menubar_height, 0, 0);
+      margin-left: $menubar_margin_left;
+      cursor: pointer;
     }
     img {
-      width: 15px;
+      width: $menubar_width;
       height: $menubar_height;
-      cursor: pointer;
     }
     .dropdown_contents {
       display: none;
@@ -80,51 +185,81 @@ $register_height: 15px;
   }
   #banner {
     width: 90px;
-    height: 40px;
-    margin-top: calculateHeaderTagTopMargin($header_height, $banner_height, 0, 0);
+    height: $banner_height;
+    margin-top: calculateTopMarginForVerticalMiddleAlign($header_height, $banner_height, 0, 0);
+    margin-left: $banner_margin_left;
     ///padding: 5px 0 0 5px;
+    a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 25px;
+      font-weight: 700;
+      color: #555;
+    }
     img {
       width: 90px;
       height: 40px;
     }
   }
   #searchbar {
-    $searchbar_height: 25px;
-    $searchbar_border_px: 1px;
-    width: 50%;
-    margin-top: calculateHeaderTagTopMargin($header_height, $searchbar_height, 0, $searchbar_border_px);
+    width: 30%;
+    margin-top: calculateTopMarginForVerticalMiddleAlign($header_height, $searchbar_height, 0, $searchbar_border_px);
+    margin-left: $searchbar_margin_left;
     //padding: 11px 0 0 50px;
+    form {
+      height: $searchbar_height;
+    }
     input {
-      width: 80%;
+      width: 70%;
       height: $searchbar_height;
       float: left;
       padding: 0;
-      border: solid #a8a8a8 1px;
+      border: solid #a8a8a8 $searchbar_border_px;
     }
     button {
       border: none;
       background: none;
       padding: 0;
+      cursor: pointer;
     }
     img {
-      width: 15.5px;
-      height: 15.5px;
+      width: 14px;
+      height: $searchbar_icon_height;
       float: left;
-      padding: 5.8px 18px 5.8px 18px;
+      padding: ($searchbar_height - $searchbar_icon_height)/2  14px;
       margin-left: 1px;
-      border: solid #a8a8a8 1.8px;
-      border-radius: 10%;
+      border: solid #a8a8a8 $searchbar_border_px;
+      border-radius: 2px;
       background: #f8f8f8;
     }
   }
+
+  #favorite_pj {
+    margin-top: calculateTopMarginForVerticalMiddleAlign($header_height, $favorite_pj_height, $favorite_pj_vertical_padding, 1);
+    .pj {
+      font-size: $sub_font_size;
+      color: #fff;
+      padding: $favorite_pj_vertical_padding / 2 0;
+      margin-left: 10px;
+      border: solid #a8a8a8 1px;
+      border-radius: 10px;
+      background: #a8a8a8;
+    }
+    .name {
+      margin-left: 10px;
+    }
+    .new_video_counts {
+      margin-left: 5px;
+      margin-right: 10px;
+    }
+  }
+
+  .button_box {
+    @include button_box;
+  }
   #auth {
-    $auth_height: $font_size + 2;
-    $login_height: $font_size + 2;
-    $login_horizon_padding: 16px;  
-    $register_height: $font_size + 2;
-    $register_horizon_padding: 16px; 
+    font-size: $sub_font_size;
     float: right;
-    margin-top: calculateHeaderTagTopMargin($header_height, $auth_height, $login_horizon_padding, 1);
+    margin-top: calculateTopMarginForVerticalMiddleAlign($header_height, $auth_height, $auth_vertical_padding, 1);
     margin-right: 5px;
 
     img {
@@ -132,49 +267,42 @@ $register_height: 15px;
       height: 27px;
       padding: 11px 20px 0 0;
     }
-    #login {
-      display: block;
-      float: right;
-      padding: $login_horizon_padding / 2 15px;
-      //margin-top: calculateHeaderTagTopMargin($header_height, $login_height, $login_horizon_padding, 1);
-      margin-right: 10px;
-      background: #f8f8f8;
-      border: solid #a8a8a8 1px;
-      border-radius: 4px;
+    #user_gate {
+      
     }
     #register {
-       display: block;
-       float: right;
-      padding: $register_horizon_padding / 2 15px;
-      //margin-top: calculateHeaderTagTopMargin($header_height, $register_height, $register_horizon_padding, 1);
-      margin-right: 10px;
-      background: #00a1ff;
-      border: solid #00619a 1px;
-      border-radius: 4px;
+      background: #555;
+      border: solid #555 1px;
       color: #fff;
     }
-  }
-
-  
-  
-
-  #upload {
-    width: 27px;
-    height: 27px;
-    padding: 11px 30px 0 0;
-    img {
-      width: 27px;
-      height: 27px;
-      padding: 0;
+    #upload {
+      background: #555;
+      border: solid #555 1px;
+      color: #fff;
+      &:hover {
+        animation-name: turnColor_upload;
+        animation-duration: 0.3s;
+        background: #a8a8a8;
+        color: #000;
+        border: solid #a8a8a8 1px;
+        box-shadow: 0 0 2px 2px #a8a8a8;
+      }
+    }
+    #withdrawal {
+      display: none;
     }
   }
-  #withdrawal {
-    display: none;
+  #user_box {
+    float: right;
+    clear: both;
+    width: 100px;
+    height: 100px;
+    border: $border_default;
+    border-radius: 4px;
+    background: #fff;
   }
 }
-
-
-
+/* 
 #sidebar {
   width: 200px;
   height: 100%;
@@ -202,10 +330,142 @@ $register_height: 15px;
     }
   }
 }
-
+ */
 #section {
-  padding: 15px;
-  margin: 50px 0 0 200px;
+  width: 100%;
+  min-height: 100%;
+  #header_handler {
+    height: $header_height;
+  }
+  #section_content_container {
+    @include section_content_container;
+  }
+  #upload_container {
+    width: $upload_container_width;
+    height: $upload_container_height;
+    padding: $padding_default;
+    border: $border_default;
+    margin: 0 auto;
+    #upload_ready {
+      width: $upload_ready_width;
+      height: $upload_ready_height;
+      padding: $upload_ready_padding;
+      border: dotted #a8a8a8 1px;
+      margin-top: calculateTopMarginForVerticalMiddleAlign($upload_container_height, $upload_ready_height, $upload_ready_padding*2, 1);
+      margin-left: calculateLeftMarginForHorizontalMiddleAlign($upload_container_width, $upload_ready_width, $upload_ready_padding*2, 1);
+      text-align: center;
+      vertical-align: middle;
+    }
+    #upload_left_side {
+      width: $upload_left_side_width;
+      height: $upload_left_side_height;
+      float: left;
+      padding: 15px;
+      border: dotted #a8a8a8 1px;
+      #upload_proccess {
+        width: upload_proccess_width;
+        height: upload_proccess_height;
+        font-size: 150px;
+        margin-top: calculateTopMarginForVerticalMiddleAlign($upload_left_side_height, $upload_proccess_height, 0, 0) - 100;
+        margin-left: calculateLeftMarginForHorizontalMiddleAlign($upload_left_side_width, $upload_proccess_width, 0, 0);
+      }
+    }
+    #upload_right_side {
+      width: 400px;
+      height: 570px;
+      float: right;
+      padding: 15px;
+      border: dotted #a8a8a8 1px;
+      .label {
+        font-weight: 700;
+      }
+    }
+  }
+
+  #motherboard_container {
+    width: $conatiner_width_default;
+    height: 100%;
+    padding: $padding_default;
+    border: $border_default;
+    margin: $margin_default 0;
+    #motherboard_top {
+      padding: $padding_default;
+      border: $border_default;
+      margin-bottom: $margin_default;
+    }
+    #motherboard_left_side {
+      float: left;
+      width: $motherboard_left_side_width;
+      height: $motherboard_left_side_height;
+      padding: $padding_default;
+      border: $border_default;
+      margin-right: $margin_default;
+    }
+    #motherboard_middle_side {
+      float: left;
+      width: $motherboard_middle_side_width;
+      height: $motherboard_left_side_height;
+      padding: $padding_default;
+      border: dotted #a8a8a8 1px;
+      margin-right: $margin_default;
+      #upload_button {
+        width: 50px;
+        height: 50px;
+        border: dotted #a8a8a8 1px;
+      }
+      #unupload_button {
+        width: 50px;
+        height: 50px;
+        border: dotted #a8a8a8 1px;
+      }
+    }
+    #motherboard_right_side {
+      float: left;
+      width: $motherboard_right_side_width;
+      height: $motherboard_left_side_height;
+      padding: $padding_default;
+      border: $border_default;
+      margin-right: $margin_default;
+      overflow: scroll;
+    }
+    .video_thumbnails_container {
+      width: 333px;
+      height: 100px;
+      clear: both;
+      &:hover {
+        animation-name: hoverVideoThumbnailContainer;
+        animation-duration: 0.3s;
+        border: $border_default;
+        cursor: pointer;
+      }
+    }
+    .video_thumbnails_img_container {
+      display: block;
+      float: left;
+      margin: 5px;
+    }
+    .video_thumbnails_properties {
+      float: left;
+    }
+    .video_thumbnails_img {
+      float: left;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .video_thumbnails_play_button {
+      width: 50px;
+      padding: 27.55px 35px;
+      margin-left: -119px;
+      opacity: 0;
+      &:hover {
+        animation-name: hoverVideoThumbnailPlayButton;
+        animation-duration: 0.3s;
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
   #streaming {
     background: gray;
     #streaming-iframe {
@@ -215,7 +475,6 @@ $register_height: 15px;
   }
   #sumnail_bundle {
     width: 1000px;
-    height: 1000px;
     margin: 0 auto;
     border: solid #d8d8d8 1px;
     .row {
@@ -225,17 +484,16 @@ $register_height: 15px;
       margin: 20px 10px;
     }
     .column img {
-      width: 100px;
-      height: 100px;
+      width: 200px;
     }
   }
 }
 
 #footer {
-  height: 50px;
-  margin-left: 200px;
+  height: $footer_height;
   clear: both;
-  border-top: solid #d8d8d8 1px;
+  border-top: solid #d8d8d8 $footer_border_px;
+  margin-top: -($footer_height+$footer_border_px);
 }
 
 
