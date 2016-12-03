@@ -26,12 +26,9 @@ function start (router) {
 	});
 	var upload = multer({ storage: storage });
 
-	var mysqlUser = '';
-	var mysqlPassword = '';
-	var mysqlDatabase = '';
-	mysqlUser = process.argv[2];
-	mysqlPassword = process.argv[3];
-	mysqlDatabase = process.argv[4];
+	var mysqlUser = process.argv[2];
+	var mysqlPassword = process.argv[3];
+	var mysqlDatabase = process.argv[4];
 	var mysqlConnection = mysql.createConnection({
 		host	 : 'localhost',
 		user	 : mysqlUser,
@@ -64,12 +61,13 @@ function start (router) {
 		saveUninitialized: true
 	}))
 
-	var googleAuthInfo = '';
-	googleAuthInfo = process.argv[5];
+	var googleAuthInfo = process.argv[5];
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	router.route(app, mysqlConnection, hasher, upload, passport, LocalStrategy, GoogleStrategy, googleAuthInfo);
+	var tokenTimer = {};
+
+	router.route(app, mysqlConnection, hasher, upload, passport, LocalStrategy, GoogleStrategy, googleAuthInfo, tokenTimer);
 
 	var server = app.listen(81, function(){
 		console.log("Express server has started on port 81");

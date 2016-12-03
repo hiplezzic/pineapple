@@ -81,7 +81,7 @@ console.log(ejsAddress);
 			if (req.session.passport && req.session.passport.hasOwnProperty('user')) {
 				avatar.auth = 'auth';
 			}
-			if (req.session.passport && req.session.passport.hasOwnProperty('user') && JSON.parse(req.session.passport.user).pj) {
+			if (req.session.passport && req.session.passport.hasOwnProperty('user') && req.session.passport.user.pj) {
 				avatar.pj = 'pj';
 			}
 			callback();

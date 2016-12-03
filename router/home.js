@@ -19,15 +19,6 @@ function Home (mysqlConnection, ejsPine) {
 			ejsPine.findEjsAddress(req, res, 'home', obj);
 		});
 		var obj = undefined;
-		/* 로그인할 경우 닉네임 표시
-		if (req.session.passport && req.session.passport.user) {
-			var obj = {
-				classes: ['auth'],
-				contents: req.session.passport.user
-			}
-		}
-		ejsPine.findEjsAddress(req, res, 'home', obj);
-		*/
 	});
 }
 
